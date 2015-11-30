@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心-首页</title>
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/center.css">
+</head>
+<body>
+<div class="page">
+    <div class="w clearFloat">
+        <div class="left aside">
+            <div class="person">
+                <div class="brief">
+                    <div class="clearFloat">
+                        <div class="left">
+                            <div class="picFrame">
+                                <img src="">
+                            </div>
+                        </div>
+                        <div class="right">
+                            <div>
+                                <span class="name">&nbsp;</span>
+                                <span class="uid">&nbsp;</span>
+                                <span><a href="" class="homePage">个人主页</a></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line"></div>
+                </div>
+
+                <h2 class="enterprise">
+                    <em></em>
+                    <a href="">我参与的活动</a>
+                </h2>
+
+                <h2 class="interestCompany">
+                    <em></em>
+                    <a href="">对我感兴趣的企业</a>
+                </h2>
+
+                <h2 class="manShow">
+                    <em></em>
+                    <a href="">我的个人秀</a>
+                </h2>
+                <ul class="manShowUl">
+                    <li class="odd">
+                        <label>称呼:</label>
+                        <span class="name"></span>
+                    </li>
+                    <li class="even">
+                        <label>手机:</label>
+                        <span class="phone"></span>
+                    </li>
+                    <li class="odd">
+                        <label>邮箱:</label>
+                        <span class="email"></span>
+                    </li>
+                    <li class="even">
+                        <label>所在公司:</label>
+                        <span class="com"></span>
+                    </li>
+                    <li class="odd">
+                        <label>职位:</label>
+                        <span class="pos"></span>
+                    </li>
+                </ul>
+                <div class="complete">
+                    <a href="">完善资料</a>
+                </div>
+            </div>
+
+            <div class="history">
+                <h2><em></em>浏览记录</h2>
+                <ul>
+                </ul>
+            </div>
+        </div>
+
+        <div class="right" id="layout_left">
+            <div id="activity" class="">
+                <h1>我参与的活动</h1>
+
+                <div class="list">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+            <div id="userInfo" class="hide">
+                <h1>我的个人秀</h1>
+
+                <div class="frm" id="frm">
+                    <form name="form1">
+                        <div class="userBox step1">
+                            <div class="boxSeed clearFloat">
+                                <label for="user_name" class=""><em>*</em>称呼</label>
+                                <input placeholder="" name="user[name]" id="user_name"
+                                       maxlength="64" type="text">
+                            </div>
+                            <div class="boxSeed clearFloat">
+                                <label for="user_phone"><em>*</em>手机</label>
+                                <input placeholder="" name="user[phone]"
+                                       id="user_phone" maxlength="20" type="text">
+                            </div>
+                            <div class="boxSeed clearFloat">
+                                <label for="user_email">邮箱</label>
+                                <input placeholder="" name="user[email]"
+                                       id="user_email" maxlength="64" type="text">
+                            </div>
+                            <div class="boxSeed clearFloat">
+                                <label for="user_company">公司</label>
+
+                                <div style="cursor: pointer;" class="choiceBox" id="comChBox">
+                                    <input style="cursor: pointer;" readonly="readonly" placeholder=""
+                                           name="user[company]" id="user_company" maxlength="30" type="text">
+                                    <em></em>
+                                </div>
+                            </div>
+                            <div class="boxSeed clearFloat">
+                                <label for="user_pos"><em>*</em>职位</label>
+                                <input placeholder="" name="user[pos]" id="user_pos" maxlength="128"
+                                       type="text">
+                            </div>
+                            <div class="boxSeed clearFloat">
+                                <label for="user_jobTime"><em>*</em>从业时长</label>
+                                <input placeholder="" name="user[jobTime]" id="user_jobTime" maxlength="2"
+                                       type="text">
+                                <span class="year">年</span>
+                            </div>
+
+                            <div class="boxSeed clearFloat">
+                                <label for="user_trainField" class="">擅长领域</label>
+                                <input placeholder="" name="user[trainField]" id="user_trainField" maxlength="64"
+                                       type="text">
+                            </div>
+
+                            <div class="boxSeed clearFloat">
+                                <label for="user_trainPos" class="">擅长职位</label>
+                                <input placeholder="" name="user[trainPos]" id="user_trainPos"
+                                       maxlength="99" type="text">
+                            </div>
+                            <div class="boxSeed clearFloat">
+                                <label for="user_grade" class="">个人成就</label>
+                                <input placeholder="" name="user[grade]" id="user_grade"
+                                       maxlength="200" type="text">
+                            </div>
+                            <div class="boxSeed clearFloat">
+                                <label for="case_name_a" class="">成功案例一</label>
+
+                                <div class="case_input">
+                                    <div>
+                                        <input placeholder="请输入公司名称" name="user[case1]" class="user_case"
+                                               id="case_name_a"
+                                               maxlength="20"
+                                               type="text">
+                                    </div>
+                                    <textarea id="case_desc_a"></textarea>
+                                </div>
+                            </div>
+                            <div class="boxSeed clearFloat">
+                                <label for="case_name_b" class="">成功案例二</label>
+
+                                <div class="case_input">
+                                    <div>
+                                        <input placeholder="请输入公司名称" name="user[case2]" class="user_case"
+                                               id="case_name_b"
+                                               maxlength="20"
+                                               type="text">
+                                    </div>
+                                    <textarea id="case_desc_b"></textarea>
+                                </div>
+                            </div>
+                            <div class="boxSeed">
+                                <a class="save btn">保存修改</a>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="avatar">
+                        <img src="">
+                    </div>
+                </div>
+            </div>
+
+            <div id="interested" class="hide">
+                <h1>对我感兴趣的企业</h1>
+
+                <div class="tab">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th class="comNameTit">企业名称</th>
+                            <th class="concatTit">联系人</th>
+                            <th class="positionTit">职位</th>
+                            <th class="concatTypeTit">联系方式</th>
+                            <th class="sourceTit">来源</th>
+                            <th class="doTit">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="bottom" class="clearFloat"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="build/center.js"></script>
+</body>
+</html>
+

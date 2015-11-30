@@ -1,0 +1,28 @@
+{
+  "name": "caiker-forward",
+  "version": "1.0.0",
+  "description": "forward project of caiker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "common",
+  "license": "none",
+  "devDependencies": {
+    "css-loader": "^0.15.1",
+    "exports-loader": "^0.6.2",
+    "file-loader": "^0.8.4",
+    "style-loader": "^0.12.3",
+    "url-loader": "^0.5.6",
+    "imports-loader": "^0.6.4",
+    "less-loader": "^2.2.0",
+    "sass-loader": "^2.0.1",
+    "html-loader": "^0.3.0",
+    "jsx-loader": "^0.12.2",
+    "react-hot-loader": "^1.1.1"
+  },
+  "dependencies": {
+    "react": "^0.12.0"
+  }
+}
+

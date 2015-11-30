@@ -1,0 +1,619 @@
+.aside {
+    width: 24%;
+}
+
+body {
+    background-color: #F6F6F6;
+}
+
+#layout_left {
+    width: 74%;
+}
+
+#layout_left h1 {
+    height: 50px;
+    font-weight: 100;
+    line-height: 50px;
+    font-size: 24px;
+    color: #666;
+    background-color: #f4f4f4;
+    border: 1px solid #E8E8E8;
+    text-indent: 20px;
+}
+
+#activity, #userInfo, #interested .tab {
+    background-color: #fff;
+}
+
+#activity .list {
+    border: 1px solid #E8E8E8;
+}
+
+#activity .list ul {
+    padding: 20px;
+}
+
+#activity .list ul li {
+    position: relative;
+    border: 1px solid #E8E8E8;
+    margin-bottom: 20px;
+}
+
+#activity .list ul li .layout {
+    font-size: 14px;
+    padding: 10px;
+}
+
+#activity .list ul li .layout .left {
+    /*width: 50%;*/
+    width: 338px;
+}
+
+#activity .list ul li .layout .right {
+    /*width: 50%;*/
+    width: 330px;
+    height: 160px;
+}
+
+#activity .list ul li .layout .right .des {
+    margin: 30px 30px 0;
+    height: 129px;
+    border-bottom: 1px solid #D1D1D1;
+}
+
+#activity .list .layout .des p {
+    margin-top: 15px;
+    line-height: 16px;
+    font-size: 12px;
+    height: 80px;
+    overflow: hidden;
+}
+
+#activity .list .layout .des h2 {
+    height: 18px;
+    overflow: hidden;
+    line-height: 18px;
+    width: 210px;
+}
+
+#activity .list .layout .below span {
+    line-height: 40px;
+    display: inline-block;
+}
+
+#activity .list .layout .below span.livLeft {
+    width: 339px;
+    border-right: 1px dashed #D1D1D1;
+}
+
+#activity .list .layout .below b {
+    font-weight: 500;
+    display: inline-block;
+}
+
+#activity .list .layout .below div.one {
+    border-bottom: 1px dashed #D1D1D1;
+}
+
+.list .layout .below b.tit {
+    padding-left: 3px;
+    width: 137px;
+}
+
+.list .layout .below b.num {
+}
+
+.list .layout .below b.num > em {
+    color: #ff6633;
+    font-size: 18px;
+    padding: 0 10px;
+}
+
+.list .layout .below b.do {
+    padding-left: 22px;
+}
+
+.list .layout .below b.do a {
+    text-decoration: underline;
+    color: #2b77d9;
+}
+
+.list .layout .below .last em {
+    display: inline-block;
+    width: 30px;
+    height: 20px;
+    vertical-align: sub;
+    *vertical-align: baseline;
+}
+
+.list .layout .below em.eye {
+    background: transparent url("../images/ac_icons.png") no-repeat scroll -70px -10px;
+}
+
+.list .layout .below em.sword {
+    background: transparent url("../images/ac_icons.png") no-repeat scroll -70px -95px;
+}
+
+.list .layout .below em.heart {
+    background: transparent url("../images/ac_icons.png") no-repeat scroll -70px -57px;
+}
+
+.list .layout .below .livRight {
+    padding-left: 25px;
+}
+
+.list .layout .below .last {
+    line-height: 10px;
+}
+
+.list .layout .below .last b {
+    width: 50px;
+    text-align: left;
+}
+
+.list .layout .below .last .two {
+    width: 45px;
+}
+
+#activity .list ul li .status {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#activity .list ul li .wm2 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    _right: 18px;
+}
+
+#activity .list ul li .status {
+    display: block;
+    line-height: 20px;
+    padding: 5px;
+    color: #fff;
+    width: 90px;
+    text-indent: 6px;
+}
+
+#activity .list ul li .success {
+    background-color: #ff9c54;
+}
+
+#activity .list ul li .under {
+    background-color: #ff5454;
+}
+
+#activity .list ul li .end {
+    background-color: #a9a9a9;
+}
+
+#activity .list ul li .check {
+    background-color: #02d390;
+}
+
+#activity .list ul li .prepare {
+    background-color: #389cfc;
+}
+
+.aside .person {
+    background-color: #fff;
+    border: 1px solid #e8e8e8;
+}
+
+.aside .history {
+    background-color: #fff;
+    margin-top: 22px;
+    border: 1px solid #e8e8e8;
+}
+
+.aside .person .brief {
+    height: 185px;
+}
+
+.aside .person .brief .picFrame {
+    height: 98px;
+    width: 98px;
+    overflow: hidden;
+    position: relative;
+    border: 5px solid #EAEAEA;
+    border-radius: 50%;
+    float: right;
+}
+
+.aside .person .brief .picFrame img {
+    position: absolute;
+    left: -55px;
+    top: -25px;
+}
+
+.aside .person .brief .left {
+    width: 50%;
+}
+
+.aside .person .brief .clearFloat {
+    padding-top: 32px;
+}
+
+.aside .person .brief .clearFloat .right {
+    margin-top: 15px;
+}
+
+.aside .person .brief .clearFloat .right span {
+    margin-bottom: 10px;
+    display: block;
+}
+
+.aside .person .brief .name {
+    font-size: 18px;
+}
+
+.aside .person .brief .right {
+    width: 50%;
+}
+
+.aside .person .brief .right > div {
+    width: 90%;
+    float: right;
+}
+
+.aside .person .brief .homePage {
+    display: block;
+    width: 68px;
+    height: 21px;
+    line-height: 21px;
+    text-align: center;
+    border: 1px solid #2a76d8;
+    border-radius: 2px;
+    color: #2a76d8;
+}
+
+.aside .person .brief .line {
+    margin-top: 22px;
+    border: 1px solid #EFEFEF;
+}
+
+.aside .person h2 {
+    background-color: #2b77d9;
+    height: 50px;
+    line-height: 50px;
+}
+
+.aside .person h2 em {
+    float: left;
+    margin-top: 5px;
+    margin-left: 25px;
+    width: 40px;
+    height: 40px;
+    background: transparent url("../images/ac_icons.png") no-repeat scroll -4px 0;
+}
+
+.aside .person h2.manShow em {
+    background-position: -15px -50px;
+}
+
+.aside .person h2.interestCompany, .aside .person h2.enterprise {
+    margin-bottom: 5px;
+}
+
+.aside .person h2 a {
+    padding-left: 5px;
+    font-size: 18px;
+    float: left;
+    color: #fff;
+    font-weight: 500;
+}
+
+.aside .person ul li {
+    padding-left: 25px;
+    height: 45px;
+    line-height: 45px;
+    font-size: 16px;
+    width: 188px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 25px;
+}
+
+.aside .person ul li span {
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+.aside .person .complete {
+    height: 75px;
+}
+
+.aside .person .complete a {
+    display: inline-block;
+    width: 125px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+    border: 1px solid #2a76d8;
+    text-align: center;
+    color: #2a76d8;
+    border-radius: 5px;
+    margin: 15px 55px 0;
+}
+
+.aside .person .odd {
+    background-color: #f9f9f9;
+}
+
+.aside .person .even {
+    background-color: #fff;
+}
+
+.aside .history h2 {
+    font-weight: 500;
+    height: 60px;
+    line-height: 60px;
+    font-size: 18px;
+    border-bottom: 1px solid #E8E8E8;
+}
+
+.aside .history h2 em {
+    float: left;
+    margin-top: 8px;
+    margin-left: 25px;
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    background: transparent url("../images/ac_icons.png") no-repeat scroll -4px -100px;
+}
+
+.aside .history ul {
+    padding: 0 20px;
+}
+
+.aside .history ul li {
+    border-bottom: 1px solid #efefef;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 15px;
+}
+
+/*---------------------个人秀css----------------------------*/
+.userBox {
+    padding: 55px 65px;
+}
+
+.frm {
+    position: relative;
+    width: 100%;
+}
+
+.boxSeed {
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+.boxSeed label {
+    /*display: inline-block;*/
+    width: 85px;
+    line-height: 40px;
+    font-size: 16px;
+    float: left;
+    text-align: right;
+    color: #666;
+    margin-right: 25px;
+}
+
+.boxSeed input {
+    width: 450px;
+    height: 40px;
+    line-height: 40px;
+    text-indent: 10px;
+    border-radius: 3px;
+    border: 1px solid #c9c9c9;
+    float: left;
+}
+
+.userBox span.year {
+    color: #666;
+    font-size: 16px;
+    height: 40px;
+    line-height: 40px;
+    margin-left: 15px;
+}
+
+.boxSeed #user_name, .boxSeed #user_phone, .boxSeed #user_email, .boxSeed #user_pos {
+    width: 200px;
+}
+
+.boxSeed #user_jobTime {
+    width: 100px;
+}
+
+.boxSeed #user_company, .boxSeed .user_case {
+    width: 200px;
+}
+
+.userBox .case_input {
+    width: 452px;
+    float: left;
+}
+
+.userBox .case_input textarea {
+    width: 450px;
+    height: 100px;
+    margin-top: 16px;
+    border-radius: 3px;
+    border: 1px solid #c9c9c9;
+    float: left;
+}
+
+.frm .avatar {
+    position: absolute;
+    top: 55px;
+    right: 115px;
+}
+
+.frm .avatar img {
+    width: 166px;
+    height: 166px;
+}
+
+.save {
+    width: 452px;
+    margin-left: 110px;
+}
+
+.wrong {
+    width: 280px;
+    height: 20px;
+    line-height: 20px;
+    color: #F60;
+    position: absolute;
+    font-size: 12px;
+}
+
+#interested thead {
+    height: 35px;
+    line-height: 35px;
+    border-bottom: 1px solid #ebebeb;
+}
+
+#interested .tab th {
+    color: #333;
+    font-weight: 500;
+}
+
+#interested .tab .comNameTit {
+    width: 130px;
+}
+
+#interested .tab .concatTit {
+    width: 100px;
+}
+
+#interested .tab .positionTit {
+    width: 115px;
+}
+
+#interested .tab .concatTypeTit {
+    width: 115px;
+}
+
+#interested .tab .sourceTit {
+    width: 190px;
+}
+
+#interested .tab .doTit {
+    width: 90px;
+}
+
+#interested .tab td {
+    text-align: center;
+    height: 70px;
+    line-height: 16px;
+    border-bottom: 1px dashed #ddd;
+    border-right: 1px dashed #ddd;
+}
+
+#interested .tab .del {
+    border-right: none;
+}
+
+#interested .tab .source a {
+    color: #2b77d9;
+}
+
+#interested .tab tr.last td {
+    border-bottom: none;
+}
+
+#interested .tab {
+    border-bottom: 1px solid #ebebeb;
+    border-left: 1px solid #ebebeb;
+    border-right: 1px solid #ebebeb;
+}
+
+.case_input textarea {
+    text-indent: 5px;
+}
+
+#comChBox {
+    background-color: #fff;
+    float: left;
+    padding-left: 0;
+}
+
+#bottom .paging {
+    float: right;
+}
+
+.page {
+    min-height: 850px;
+}
+
+.aside .person h2.enterprise em {
+    background-position: -7px -153px;
+}
+
+.aside .person h2.interestCompany em {
+    background-position: -3px 0;
+}
+
+.aside .person h2:hover {
+    background-color: #389cfc;
+}
+
+.aside .person h2 a:hover {
+    text-decoration: none;
+}
+
+.del .del_btn {
+    float: left;
+    margin-left: 25px;
+}
+
+#interested .tab td.del {
+    line-height: 30px;
+}
+
+.del em {
+    display: block;
+    width: 40px;
+    height: 40px;
+    background: transparent url("../images/ac_icons.png") no-repeat scroll -63px -150px;
+}
+
+#interested .tab .comNameTd {
+    width: 120px;
+    overflow: hidden;
+    padding: 0 5px;
+}
+
+#interested .tab .concatTd {
+    width: 90px;
+    overflow: hidden;
+    padding: 0 5px;
+}
+
+#interested .tab .positionTd {
+    width: 105px;
+    overflow: hidden;
+    padding: 0 5px;
+}
+
+#interested .tab .concatTypeTd {
+    width: 105px;
+    overflow: hidden;
+    padding: 0 5px;
+}
+
+#interested .tab .sourceTd {
+    width: 180px;
+    overflow: hidden;
+    padding: 0 5px;
+}
+
+.userBox label em {
+    color: #FA6348;
+    margin-right: 2px;
+}
