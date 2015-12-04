@@ -6,6 +6,7 @@ define(function (require) {
         prompt_dialog = function () {
             this.html = require('./lab_prompt_dialog.html');
             this.css = require('./lab_prompt_dialog.css');
+            this.interactComs = {};
             this.prompt_dialog = !1;
         };
 
@@ -21,6 +22,10 @@ define(function (require) {
         prompt_dialog.css('left', ($(container).width() - prompt_dialog.width()) / 2);
         this.prompt_dialog = new dialog().init(".prompt", $(container));
         return this;
+    };
+
+    prompt_dialog.prototype.setInteractComs = function (interactComs) {
+        this.interactComs = interactComs;
     };
 
     /**
@@ -46,7 +51,6 @@ define(function (require) {
         'error': 'error',
         'succeed': 'succeed'
     };
-
 
     return prompt_dialog;
 });

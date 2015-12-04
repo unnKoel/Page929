@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <title></title>
     <!--<link rel="stylesheet" href="../../css/base.css">-->
-    <!--<link rel="stylesheet" href="./lab_login.css">-->
+    <!--<link rel="stylesheet" href="./lab_ac_apply.css">-->
 </head>
 <body>
-<div class="login-form" id="lg-form">
+<div class="login-form" id="apply-form">
     <div class="login-box">
         <div class="mt">
             <div></div>
@@ -22,28 +22,24 @@
                     <div class="item item-fore1 highlight">
                         <label for="loginname" class="login-label name-label"></label>
                         <input id="loginname" class="itxt" name="loginname" tabindex="1" autocomplete="off"
-                               placeholder="邮箱/已验证手机" type="text">
+                               placeholder="请输入手机号" type="text">
                         <span class="clear-btn"></span>
                     </div>
-                    <div id="entry" class="item item-fore2 highlight">
+
+                    <div id="entry" class="item item-fore2 highlight hide">
                         <label class="login-label pwd-label" for="nloginpwd"></label>
                         <input id="nloginpwd" name="nloginpwd" class="itxt itxt-error" tabindex="2"
-                               autocomplete="off" placeholder="密码" type="password">
+                               autocomplete="off" placeholder="请输入您的密码" type="password">
                         <span class="clear-btn"></span>
-                        <span style="display: none;" class="capslock"><b></b>大小写锁定已打开</span>
                     </div>
-                    <div class="item item-fore3">
-                        <div class="safe">
-                                        <span class="rem">
-                                            <input id="autoLogin" name="chkRememberMe" class="jdcheckbox" tabindex="3"
-                                                   type="checkbox">
-                                            <label>记住我</label>
-                                        </span>
-                                        <span class="forget-pw-safe">
-                                            <a href="./uc_forgetpwd.html" class="" target="_blank">忘记密码?</a>
-                                        </span>
-                        </div>
+
+                    <div id="reName" class="item item-fore2 highlight hide">
+                        <label class="login-label pwd-label" for="nloginpwd"></label>
+                        <input id="user_name" name="userName" class="itxt itxt-error" tabindex="2"
+                               autocomplete="off" placeholder="姓名" type="password">
+                        <span class="clear-btn"></span>
                     </div>
+
                     <div class="item-fore4">
                         <div class="msg-wrap">
                             <div class="msg-error hide"><b></b></div>
@@ -51,7 +47,7 @@
                     </div>
                     <div class="item item-fore5">
                         <div class="login-btn">
-                            <a href="javascript:;" class="btn-img btn-entry" id="loginsubmit" tabindex="6">立&nbsp;即&nbsp;登&nbsp;录</a>
+                            <a href="javascript:void(0);" class="btn-img btn-entry" id="apply" tabindex="6">确&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;定</a>
                         </div>
                     </div>
                 </form>

@@ -87,6 +87,7 @@ define(function (require) {
             }, 2000);
         };
 
+        //异步提交验证
         this.asyncSubmit = function (ele, url, callback, optParam) {
             if (!n.el) {
                 return false;
@@ -132,15 +133,24 @@ define(function (require) {
             return n;
         };
 
+        //文本框失去焦点验证
         this.onblurVerify = function () {
             if (!n.el) {
                 return false;
             }
 
             for (var itemName in n.checkItems) {
+                e(n.el[itemName]).focus(function (evt) {
+                    evt = window.event || evt;
+                    var target = evt.srcElement || evt.target;
+                    e(target).css('border-color', '#C9C9C9');
+                    target.ele ? e(target.ele).removeClass('wrong').addClass('correct') : !1;
+                });
+
                 e(n.el[itemName]).blur(function (evt) {
                     evt = window.event || evt;
                     var target = evt.srcElement || evt.target;
+
                     if (n.opts.errorHighLight && target.ele) {
                         e(target.ele).hasClass('highlight') && e(target.ele).removeClass('highlight');
                     }
@@ -154,18 +164,6 @@ define(function (require) {
                         n.drewMsg(target, verifyResult.message, "correct");
                     }
                 });
-            }
-        };
-
-        this.drewReturnMsg = function (msg) {
-            if (n.opts.errorContainer) {
-                var ele = document.createElement('div');
-                ele.className = 'fv_error';
-                ele.innerHTML = msg;
-                e(n.opts.errorContainer).append(ele);
-                setTimeout(function () {
-                    e(ele).remove();
-                }, 3000);
             }
         };
 
@@ -194,7 +192,7 @@ define(function (require) {
                 return {x: left, y: top};
             }
 
-            if (n.opts.errorContainer) {
+            if (n.opts.errorContainer) {   //errorContainer模式
                 if (type == 'wrong') {
                     if (!obj.ele) {
                         var ele = document.createElement('div');
@@ -209,8 +207,8 @@ define(function (require) {
                         obj.ele = undefined;
                     }
                 }
-            } else {
-                var container = n.opts.container;
+            } else {   //输入框底部提示模式
+                var container = n.opts.container;   //如果有错误提示容器
                 if (!obj.ele) {
                     var ele = document.createElement('div');
                     obj.ele = ele;
@@ -221,12 +219,26 @@ define(function (require) {
                     );
                 }
                 obj.ele.className = type;
+                type == 'wrong' ? e(obj).css('border-color', '#F60') : e(obj).css('border-color', '#C9C9C9');
                 obj.ele.innerHTML = msg == undefined ? "" : msg;
                 var xoffset = n.opts.xoffset;
                 var yoffset = n.opts.yoffset;
                 obj.ele.style.left = (XgetPosition(obj, container).x + (!xoffset ? 0 : xoffset)) + 'px';
                 obj.ele.style.top = (XgetPosition(obj, container).y + (!yoffset ? 0 : yoffset)) + 'px';
             }
-        }
+        };
+
+
+        this.drewReturnMsg = function (msg) {
+            if (n.opts.errorContainer) {
+                var ele = document.createElement('div');
+                ele.className = 'fv_error';
+                ele.innerHTML = msg;
+                e(n.opts.errorContainer).append(ele);
+                setTimeout(function () {
+                    e(ele).remove();
+                }, 3000);
+            }
+        };
     };
 });

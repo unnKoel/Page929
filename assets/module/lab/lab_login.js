@@ -4,12 +4,13 @@
 define(function (require) {
     var $ = require('../lib/jquery-1.11.2.min'),
         base = require('../lib/uc_base');
-    //React = require('react');
     return function () {
 
         this.html = require('./lab_login.html');
         this.css = require('./lab_login.css');
+        this.interactComs = {};
         this.lg_dialog = !1;
+        this.topLevelEle = !1;
 
         /**
          * 绘画登陆弹出框
@@ -17,28 +18,42 @@ define(function (require) {
          */
         this.drew = function (container) {
             var dialog = require("../comp/dialog");
-            //container.append('<div id="lab_login"></div>');
-            //React.render(
-            //    this.html({class: 'msg-error hide', label: 'asdf'}), document.getElementById('lab_login')
-            //);
-
             $(container).append(this.html);
-            var lgForm = $('.login-form');
+            this.topLevelEle = $('#lg-form');
+            var lgForm = this.topLevelEle;
             lgForm.css('left', ($(window).width() - lgForm.width()) / 2);
-            this.lg_dialog = new dialog().init(".login-form", $(container));
+            this.lg_dialog = new dialog().init("#lg-form", $(container));
             this.decorate();
             return this;
         };
 
+        /**
+         *设置交互组件
+         * @param interactComs
+         */
+        this.setInteractComs = function (interactComs) {
+            this.interactComs = interactComs;
+            this.bind_submit();
+        };
+
+        /**
+         * ui装饰
+         */
         this.decorate = function () {
             base.ieCompatibility.JPlaceHolder.init();
-
-            $("#formlogin input").each(function () {
+            var supportPlaceHodler = base.ieCompatibility.JPlaceHolder._check(),
+                self = this;
+            if (!supportPlaceHodler) {  //如果ie，清空登陆输入框
+                setTimeout(function () {
+                    self.topLevelEle.find('#loginname').val('');
+                    self.topLevelEle.find('#nloginpwd').val('');
+                }, 1);
+            }
+            self.topLevelEle.find('input').each(function () {
                 $(this).keyup(function () {
                     var val = $(this).val(),
                         input = $(this),
-                        closeEle = undefined,
-                        supportPlaceHodler = base.ieCompatibility.JPlaceHolder._check();
+                        closeEle = undefined;
                     if (!supportPlaceHodler) {   //不兼容placeHolder的ie浏览器
                         closeEle = $(this).parent().next('.clear-btn')
                     } else {
@@ -59,7 +74,7 @@ define(function (require) {
                 });
 
                 $(this).focus(function () {
-                    $('.msg-error').addClass('hide'),
+                    self.topLevelEle.find('.msg-error').addClass('hide'),
                         $(this).parents('.highlight').removeClass('item-error').addClass('item-focus');
                 }).blur(function () {
                     $(this).parents('.highlight').removeClass('item-focus');
@@ -78,31 +93,28 @@ define(function (require) {
          * 绑定提交事件
          * @param opts
          */
-        this.bind_submit = function (opts) {
+        this.bind_submit = function () {
+            var self = this;
             $(document).keyup(function (event) {
                 if (event.keyCode == 13) {
-                    $('#loginsubmit').click();
+                    self.topLevelEle.find('#loginsubmit').click();
                 }
             });
-            var self = this;
-            $('#loginsubmit').click(function () {
-                var account = $("#loginname").val(),
-                    pwd = $("#nloginpwd").val(),
-                    autoLogin = $('#autoLogin').is(':checked') ? 1 : 0;
+            self.topLevelEle.find('#loginsubmit').click(function () {
+                var account = self.topLevelEle.find("#loginname").val(),
+                    pwd = self.topLevelEle.find("#nloginpwd").val(),
+                    autoLogin = self.topLevelEle.find('#autoLogin').is(':checked') ? 1 : 0;
                 return 0 == $.trim(account).length && 0 == $.trim(pwd).length ? (
-                    $('.item-fore2').addClass('item-error'),
-                        $('.item-fore1').addClass('item-error'),
-                        $('.msg-error').removeClass('hide').html('<b></b>请输入账户名和密码')
-                    //React.render(
-                    //    self.html({class: 'msg-error', label: '请输入账户名和密码'}), document.getElementById('lab_login')
-                    //)
+                    self.topLevelEle.find('.item-fore2').addClass('item-error'),
+                        self.topLevelEle.find('.item-fore1').addClass('item-error'),
+                        self.topLevelEle.find('.msg-error').removeClass('hide').html('<b></b>请输入账户名和密码')
                 ) : (
                     0 == $.trim(account).length ? (
-                        $('.item-fore1').addClass('item-error'),
-                            $('.msg-error').removeClass('hide').html('<b></b>请输入账户名和密码')
+                        self.topLevelEle.find('.item-fore1').addClass('item-error'),
+                            self.topLevelEle.find('.msg-error').removeClass('hide').html('<b></b>请输入账户名和密码')
                     ) : ( 0 == $.trim(pwd).length ? (
-                            $('.item-fore2').addClass('item-error'),
-                                $('.msg-error').removeClass('hide').html('<b></b>请输入账户名和密码')
+                            self.topLevelEle.find('.item-fore2').addClass('item-error'),
+                                self.topLevelEle.find('.msg-error').removeClass('hide').html('<b></b>请输入账户名和密码')
                         ) : (
                             $.ajax({
                                     url: base.domain + "/hh/user/login",
@@ -119,10 +131,10 @@ define(function (require) {
                                             void(0 == result.code && (
                                                     base.cookieOperate.setCookie('caiker_uid', result.data.id, 20),
                                                         self.lg_dialog.close(),
-                                                        opts.lab_head_tail.mod_user_status(result.data.name, self),
-                                                        opts.lg_callback(result.data)  //登陆回调
+                                                        self.interactComs.lab_head_tail.mod_user_status(result.data.name, self),
+                                                        self.interactComs.lgCallback(result.data)  //登陆回调
                                                 )
-                                            ) : $('.msg-error').removeClass('hide').html('<b></b>账户名与密码不匹配，请重新输入');
+                                            ) : self.topLevelEle.find('.msg-error').removeClass('hide').html('<b></b>账户名与密码不匹配，请重新输入');
                                     }
                                 }
                             )
@@ -133,4 +145,3 @@ define(function (require) {
         }
     };
 });
-

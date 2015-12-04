@@ -1,6 +1,6 @@
 .prompt {
     position: fixed;
-    z-index: 4;
+    z-index: 1000000;
     width: 370px;
     background: #FFF none repeat scroll 0% 0%;
     padding: 20px;

@@ -6,6 +6,7 @@ define(function (require) {
         affirm_dialog = function () {
             this.html = require('./lab_affirm_dialog.html');
             this.css = require('./lab_affirm_dialog.css');
+            this.interactComs = {};
             this.affirm_dialog = !1;
         };
 
@@ -21,6 +22,13 @@ define(function (require) {
         affirm_dialog.css('left', ($(container).width() - affirm_dialog.width()) / 2);
         this.affirm_dialog = new dialog().init(".affirm", $(container));
         return this;
+    };
+
+    /**
+     * 设置交互组件
+     */
+    affirm_dialog.prototype.setInteractComs = function (interactComs) {
+        this.interactComs = interactComs;
     };
 
     /**
