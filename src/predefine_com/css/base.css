@@ -1,0 +1,535 @@
+/* �������߾� */
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements �ṹԪ�� */
+dl, dt, dd, ul, ol, li, /* list elements �б�Ԫ�� */
+pre, /* text formatting elements �ı���ʽԪ�� */
+fieldset, button, input, textarea, /* form elements ��Ԫ�� */
+th, td {
+    /* table elements ���Ԫ�� */
+    margin: 0;
+    padding: 0;
+}
+
+/* ����Ĭ������ */
+body,
+button, input, select, textarea {
+    /* for ie */
+    /*font: 12px/1 Tahoma, Helvetica, Arial, "����", sans-serif;*/
+    font: 14px/1 '微软雅黑', Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif; /* �� ascii �ַ���ʾ��ʹ�����κα����¶������� */
+}
+
+input::-ms-clear {
+    display: none;
+}
+
+input[type="password"]::-ms-reveal {
+    display: none;
+}
+
+h1 {
+    font-size: 18px; /* 18px / 12px = 1.5 */
+}
+
+h2 {
+    font-size: 16px;
+}
+
+h3 {
+    font-size: 14px;
+}
+
+h4, h5, h6 {
+    font-size: 100%;
+}
+
+address, cite, dfn, em, var {
+    font-style: normal;
+}
+
+/* ��б����� */
+code, kbd, pre, samp, tt {
+    font-family: "Courier New", Courier, monospace;
+}
+
+/* ͳһ�ȿ����� */
+small {
+    font-size: 12px;
+}
+
+/* С�� 12px �����ĺ����Ķ����� small ������ */
+
+/* �����б�Ԫ�� */
+ul, ol {
+    list-style: none;
+}
+
+/* �����ı���ʽԪ�� */
+a {
+    color: #666;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+abbr[title], acronym[title] {
+    /* ע��1.ie6 ��֧�� abbr; 2.������������ѡ�����ie6 ����Ч�� */
+    border-bottom: 1px dotted;
+    cursor: help;
+}
+
+q:before, q:after {
+    content: '';
+}
+
+/* ���ñ�Ԫ�� */
+legend {
+    color: #000;
+}
+
+/* for ie6 */
+fieldset, img {
+    border: none;
+}
+
+/* img ������������ img �ޱ߿� */
+/* ע��optgroup �޷����� */
+button, input, select, textarea {
+    font-size: 100%; /* ʹ�ñ�Ԫ���� ie ���ܼ̳������С */
+}
+
+/* ���ñ��Ԫ�� */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* ���� hr */
+hr {
+    border: none;
+    height: 1px;
+}
+
+/* �÷�ie�����Ĭ��Ҳ��ʾ��ֱ����������ֹ��������������˸ */
+html {
+    overflow-y: scroll;
+}
+
+img {
+    vertical-align: middle;
+}
+
+*:focus {
+    outline: none;
+}
+
+.w {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.hide {
+    display: none;
+}
+
+.btn-img, .button {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    border: 0 none;
+    text-align: center;
+    cursor: pointer;
+}
+
+#logo {
+    padding: 10px 0;
+    position: relative;
+}
+
+.tab {
+    overflow: hidden;
+}
+
+.tab li, .tab-item {
+    float: left;
+    text-align: center;
+}
+
+.form label, .form input, .form select, .form textarea, .form button, .form .label {
+    float: left;
+    font-size: 12px;
+}
+
+.fl {
+    float: left;
+}
+
+.clr {
+    display: block;
+    overflow: hidden;
+    clear: both;
+    height: 0;
+    line-height: 0;
+    font-size: 0;
+}
+
+#regist #mobileCodeDiv .item-ifo, .thickbox-form.thickbox-form #mobileCodeDiv .item-ifo {
+    width: 255px;
+}
+
+#regist .item .item-ifo, .thickbox-form .item .item-ifo {
+    position: relative;
+    width: 270px;
+}
+
+.ks-dialog {
+    padding: 16px;
+    color: #3E3E3E;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #DEDEDE #DEDEDE;
+    -moz-border-top-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    border-image: none;
+    background-color: #FFF;
+    position: absolute;
+    z-index: 100001;
+}
+
+.ks-overlay-close {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    font-size: 24px;
+    text-align: center;
+    line-height: 24px;
+    color: #DDD;
+    text-decoration: none;
+    position: absolute;
+    top: 16px;
+    right: 40px;
+}
+
+.ks-dialog-header {
+    font-size: 16px;
+}
+
+.ks-dialog-header h3 {
+    text-align: center;
+    font-size: 32px;
+    padding-bottom: 16px;
+    color: #777;
+}
+
+.ks-dialog-content {
+    padding: 24px;
+}
+
+.ks-dialog-content p {
+    font-size: 16px;
+}
+
+.ks-dialog-body .dialogRow04 {
+    max-height: 560px;
+    overflow-y: scroll;
+}
+
+.ks-dialog-body p {
+    margin-left: 5px;
+    font-size: 16px;
+    line-height: 32px;
+    color: #666;
+}
+
+.ks-dialog-content p a {
+    font-weight: 700;
+    font-size: 16px;
+    color: #C40000;
+}
+
+.row {
+    margin-top: 42px;
+    overflow: hidden;
+    zoom: 1;
+}
+
+.row:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.br_top {
+    margin-top: 3px;
+}
+
+.br_bottom {
+    margin-bottom: 3px;
+    border-bottom: none;
+}
+
+div.down {
+    border-color: #3497d9;
+}
+
+#error404 {
+    height: 450px;
+    background-color: #fff;
+    border: 2px solid #BBB;
+    margin-top: 30px;
+}
+
+#error404 .content {
+    padding-top: 100px;
+    overflow: hidden;
+    height: 162px;
+}
+
+#error404 .content .left {
+    text-align: right;
+    width: 40%;
+    float: left;
+    height: 162px;
+}
+
+#error404 .content .right {
+    width: 60%;
+    float: right;
+    height: 162px;
+}
+
+#error404 .content .right p {
+    padding-top: 80px;
+    margin-left: 30px;
+}
+
+#error404 .content .right p em {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+#error404 .content .right p span {
+    line-height: 35px;
+    font-size: 16px;
+}
+
+#error404 .content .right p span a {
+    color: #389cfc;
+}
+
+b.sn-msg-close {
+    width: 14px;
+    padding-left: 2px;
+    height: 32px;
+    line-height: 26px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    color: #BFB5B5;
+}
+
+a.sn-msg-title, a.sn-msg-title:visited {
+    display: inline-block;
+    text-decoration: none;
+    margin-left: 6px;
+    width: 160px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: #FFF;
+    height: 32px;
+}
+
+.sn-msg-bd {
+    position: absolute;
+    top: 12px;
+    left: 0;
+    display: block;
+    background-color: #666;
+    border-radius: 2px;
+    height: 20px;
+    line-height: 20px;
+    white-space: nowrap;
+    z-index: 93410;
+    padding-right: 22px;
+}
+
+.sn-msg-hd {
+    position: absolute;
+    display: block;
+    font-size: 0;
+    height: 0;
+    width: 0;
+    background: transparent none repeat scroll 0 0;
+    border-color: transparent transparent #666;
+    border-style: dashed dashed solid;
+    border-width: 6px;
+    left: 20px;
+    top: 0;
+    z-index: 93420;
+}
+
+.sn-msg-box {
+    position: absolute;
+    top: 25px;
+    left: 210px;
+    z-index: 95000;
+    display: block;
+}
+
+.modeFull {
+    width: 100%;
+}
+
+.modeFull .mode {
+    /*width: 960px;*/
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px 0;
+    overflow: hidden;
+    zoom: 1;
+}
+
+.nav .mode:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+#header .head {
+    margin-left: auto;
+    margin-right: auto;
+    color: #666;
+    font-size: 12px;
+    zoom: 1;
+}
+
+#header .head:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+#header .headSeed {
+    float: left;
+    padding: 0 10px;
+}
+
+#header .headSeed a {
+    color: #666;
+    width: 100%;
+}
+
+.right {
+    float: right;
+}
+
+.left {
+    float: left;
+}
+
+.specialList a {
+    float: left;
+    font-size: 14px;
+    color: #333;
+    margin-left: 30px;
+    padding: 10px 0px;
+    width: 74px;
+    text-align: center;
+}
+
+.nav a {
+    color: #666;
+    margin-right: 5px;
+    float: left;
+}
+
+.nav {
+    background-color: #fff;
+}
+
+.nav .right {
+    font-size: 12px;
+    color: #666;
+    padding-top: 10px;
+}
+
+.logoIndex img {
+    width: 81px;
+    height: 40px;
+    overflow: hidden;
+    padding: 5px;
+}
+
+.none {
+    display: none;
+}
+
+.main {
+    background-color: #f6f6f6;
+}
+
+/*新头尾样式end*/
+.clearFloat:after {
+    content: '.';
+    display: block;
+    clear: both;
+    line-height: 0;
+    height: 0;
+    visibility: hidden;
+}
+
+/* 清理浮动 ie 6 hacker */
+* html .clearFloat {
+    zoom: 1;
+}
+
+/* 清理浮动 ie 7 hacker */
+*:first-child + html .clearFloat {
+    zoom: 1;
+}
+
+.page {
+    padding: 10px 0;
+}
+
+.btn {
+    display: inline-block;
+    width: 100%;
+    padding: 18px 0;
+    background-color: #3497D9;
+    color: #FFF;
+    font-weight: 900;
+    text-align: center;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #3FB2FF;
+}
+
+/* Remove IE's “clear field” X button */
+input::-ms-clear, input::-ms-reveal {
+    display: none;
+}
+
+/*ie 支持fixed 防止抖动*/
+body {
+    _background-attachment: fixed;
+    _background-image: url(about:blank);
+}

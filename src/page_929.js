@@ -2,7 +2,7 @@
  * Created by common on 2015/12/7.
  */
 define(function (require) {
-    var $ = require('./lib/jquery-1.11.2.min'),
+    var $ = require('./lib/jquery-1.11.2'),
         base = require('./lib/uc_base'),
         shim = require('./lib/es5-shim'), //ie6-8 es5特性增强包
 

@@ -2,7 +2,7 @@
  * Created by common on 2015/11/12.
  */
 define(function (require) {
-    var $ = require('../lib/jquery-1.11.2.min'),
+    var $ = require('../lib/jquery-1.11.2'),
         head_tail = function () {
             this.html = require('./lab_head_tail.html');
             this.css = require('./lab_head_tail.css');

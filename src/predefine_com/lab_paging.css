@@ -1,0 +1,71 @@
+a:hover {
+    text-decoration: none;
+}
+
+.paging {
+    padding: 15px 20px;
+    text-align: left;
+    color: #ccc;
+}
+
+.paging a {
+    display: inline-block;
+    color: #666;
+    height: 40px;
+    line-height: 40px;
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    width: 40px;
+    text-align: center;
+}
+
+.paging a:hover {
+    text-decoration: none;
+    /*border: 1px solid #428bca;*/
+    border-left: 1px solid #428bca;
+    border-bottom: 1px solid #428bca;
+    border-top: 1px solid #428bca;
+}
+
+.paging .prevPage {
+    width: 70px;
+    text-align: center;
+}
+
+.paging .nextPage {
+    width: 70px;
+    text-align: center;
+    border-right: 1px solid #ddd;
+}
+
+.paging span.current {
+    display: inline-block;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    color: #fff;
+    background-color: #389cfc;
+    border: 1px solid #389cfc;
+    width: 40px;
+}
+
+.paging span {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-left: 1px solid #ddd;
+}
+
+.paging span.disabled {
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    color: #bfbfbf;
+    background: #efefef;
+    border: 1px solid #ddd;
+    width: 70px;
+    text-align: center;
+}

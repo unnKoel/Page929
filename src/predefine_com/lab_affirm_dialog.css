@@ -1,0 +1,60 @@
+.affirm {
+    position: fixed;
+    z-index: 1000000;
+    width: 370px;
+    background: #FFF none repeat scroll 0% 0%;
+    padding: 20px;
+    overflow: visible;
+    border-radius: 5px;
+    top: 25%;
+    border: 1px solid rgb(204, 204, 204);
+
+    _position: absolute;
+    _bottom: auto;
+    _top: expression(eval(document.documentElement.scrollTop));
+    _margin-top: 7%;
+}
+
+.affirm .btn_close {
+    width: 42px;
+    height: 42px;
+    top: 0;
+    right: 15px;
+    position: absolute;
+    cursor: pointer;
+    background: transparent url("./images/lab_lg_icons.gif") no-repeat scroll -80px -190px;
+}
+
+.affirm .msg {
+    padding: 20px 0;
+}
+
+.affirm .msg .icon {
+    float: left;
+    width: 34px;
+    height: 34px;
+    background: url('./images/lab_base.png') no-repeat scroll;
+    background-position: -20px -138px;
+}
+
+.affirm .msg .word {
+    float: left;
+    font-size: 16px;
+    line-height: 33px;
+    width: 280px;
+    margin-left: 10px;
+}
+
+.affirm .sure {
+    float: left;
+    width: 100px;
+    padding: 10px 0;
+    margin-left: 43px;
+}
+
+.affirm .cancel {
+    float: right;
+    width: 100px;
+    padding: 10px 0;
+    margin-right: 55px;
+}
