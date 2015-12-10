@@ -7,7 +7,7 @@ define(function (require) {
         {
             lab_login: {
                 load: function () {
-                    return require('D:/project/Page929/example/demo_com/lab_login')
+                    return require('../demo_com/lab_login')
                 },
                 site: '#login',
                 interactCom: []

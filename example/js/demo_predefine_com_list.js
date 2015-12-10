@@ -14,28 +14,28 @@ define(function (require) {
         {
             lab_prompt_dialog: {
                 load: function () {
-                    return require('D:/project/Page929/src/predefine_com/lab_prompt_dialog')
+                    return require('./predefine_com/lab_prompt_dialog')
                 },
                 site: '#page929_prompt',
                 interactCom: []
             },
             lab_affirm_dialog: {
                 load: function () {
-                    return require('D:/project/Page929/src/predefine_com/lab_affirm_dialog')
+                    return require('./predefine_com/lab_affirm_dialog')
                 },
                 site: '#page929_affirm',
                 interactCom: []
             },
             lab_head_tail: {
                 load: function () {
-                    return require('D:/project/Page929/src/predefine_com/lab_head_tail')
+                    return require('./predefine_com/lab_head_tail')
                 },
                 site: '#page929_head',
                 interactCom: ['lab_login']
             },
             lab_login: {
                 load: function () {
-                    return require('D:/project/Page929/src/predefine_com/lab_login')
+                    return require('./predefine_com/lab_login')
                 },
                 site: '#page929_login',
                 interactCom: ['lab_head_tail', 'lgCallback']
@@ -43,7 +43,7 @@ define(function (require) {
 
             lab_paging: {
                 load: function () {
-                    return require('D:/project/Page929/src/gallery_com/lab_paging')
+                    return require('./gallery_com/lab_paging')
                 },
                 site: '#page929_paging'
             }

@@ -1,7 +1,7 @@
 {
-  "name": "caiker-forward",
+  "name": "page-929",
   "version": "1.0.0",
-  "description": "forward project of caiker",
+  "description": "a front-end framework",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

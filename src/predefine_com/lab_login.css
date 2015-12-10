@@ -103,7 +103,7 @@
     width: 16px;
     height: 16px;
     overflow: hidden;
-    background: transparent url("./images/lab_lg_icons.gif") no-repeat scroll -15px -202px;
+    background: transparent url("./images/lab_lg_icons.gif") no-repeat scroll -25px -208px;
 
 }
 
@@ -150,7 +150,7 @@
     width: 38px;
     left: 5px;
     height: 38px;
-    background: transparent url("./images/lab_lg_icons.gif") no-repeat scroll -10px -233px;
+    background: transparent url("./images/lab_lg_icons.gif") no-repeat scroll -20px -239px;
 }
 
 #page929_login .form label {
@@ -237,7 +237,7 @@
 }
 
 #page929_login .form .item .pwd-label {
-    background-position: -10px -282px;
+    background-position: -20px -287px;
 }
 
 #page929_login .login-box .login-btn {
@@ -271,7 +271,7 @@
     right: 15px;
     position: absolute;
     cursor: pointer;
-    background: transparent url("./images/lab_lg_icons.gif") no-repeat scroll -80px -190px;
+    background: transparent url("./images/lab_lg_icons.gif") no-repeat scroll -90px -196px;
 }
 
 #page929_login .wrap {

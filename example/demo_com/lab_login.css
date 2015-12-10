@@ -104,7 +104,7 @@
     width: 16px;
     height: 16px;
     overflow: hidden;
-    background: transparent url("./images/lab_lg_icons.gif") no-repeat scroll -15px -202px;
+    background: transparent url("./images/lab_lg_icons.gif") no-repeat scroll -25px -208px;
 
 }
 
@@ -151,7 +151,7 @@
     width: 38px;
     left: 5px;
     height: 38px;
-    background: transparent url("./images/lab_lg_icons.gif") no-repeat scroll -10px -233px;
+    background: transparent url("./images/lab_lg_icons.gif") no-repeat scroll -20px -239px;
 }
 
 .form label {
@@ -238,7 +238,7 @@
 }
 
 .form .item .pwd-label {
-    background-position: -10px -282px;
+    background-position: -20px -287px;
 }
 
 .login-form .login-box .login-btn {
@@ -272,7 +272,7 @@
     right: 15px;
     position: absolute;
     cursor: pointer;
-    background: transparent url("./images/lab_lg_icons.gif") no-repeat scroll -80px -190px;
+    background: transparent url("./images/lab_lg_icons.gif") no-repeat scroll -90px -196px;
 }
 
 .login-form .wrap {
@@ -319,7 +319,7 @@
     background-color: #fff;
 }
 
-/* Remove IE's ¡°clear field¡± X button
+/* Remove IE's ï¿½ï¿½clear fieldï¿½ï¿½ X button
 input:-ms-clear, input:-ms-reveal {
     display: none;
 }

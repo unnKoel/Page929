@@ -72,22 +72,22 @@ define(function (require) {
                                     comVessel = page.comVessel;
                                 0 == result.code ?
                                     void(0 == result.code &&
-                                        (   //登陆回调
-                                            user = result.data,   //获取用户信息
-                                                page.config.user.user_type ?
-                                                    (  //如果页面要求用户类型才可访问
-                                                        page.config.user.user_type == user.userType ?
-                                                            (
-                                                                comVessel.lab_head_tail.mod_user_status(user.name, comVessel.lab_login),
-                                                                    page.config.user.lgCallback(user)
-                                                            ) :
-                                                            base.url.forward('/404.html') //页面身份不符合，跳404页
-                                                    ) :
-                                                    (
-                                                        comVessel.lab_head_tail.mod_user_status(user.name, comVessel.lab_login),
-                                                            page.config.user.lgCallback(user)
-                                                    )
-                                        )
+                                    (   //登陆回调
+                                        user = result.data,   //获取用户信息
+                                            page.config.user.user_type ?
+                                                (  //如果页面要求用户类型才可访问
+                                                    page.config.user.user_type == user.userType ?
+                                                        (
+                                                            comVessel.lab_head_tail.mod_user_status(user.name, comVessel.lab_login),
+                                                                page.config.user.lgCallback(user)
+                                                        ) :
+                                                        base.url.forward('/404.html') //页面身份不符合，跳404页
+                                                ) :
+                                                (
+                                                    comVessel.lab_head_tail.mod_user_status(user.name, comVessel.lab_login),
+                                                        page.config.user.lgCallback(user)
+                                                )
+                                    )
                                     ) :
                                     (
                                         page.config.user.unLgCallback ? page.config.user.unLgCallback() :   //未登陆回调

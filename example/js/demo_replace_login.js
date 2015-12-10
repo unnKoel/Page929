@@ -16,7 +16,7 @@ define(function (require) {
         {
             lab_head_tail: {
                 load: function () {
-                    return require('D:/project/Page929/example/demo_com/lab_head_tail_ac')
+                    return require('../demo_com/lab_head_tail_ac')
                 },
                 site: '.page',
                 interactCom: ['lab_login']
@@ -24,12 +24,11 @@ define(function (require) {
 
             lab_login: {
                 load: function () {
-                    return require('D:/project/Page929/example/demo_com/lab_goto_login')
+                    return require('../demo_com/lab_goto_login')
                 },
                 site: '.page',
                 interactCom: []
             }
         }
     );
-})
-;
+});
