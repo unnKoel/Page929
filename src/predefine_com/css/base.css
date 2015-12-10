@@ -531,5 +531,4 @@ input::-ms-clear, input::-ms-reveal {
 /*ie 支持fixed 防止抖动*/
 body {
     _background-attachment: fixed;
-    _background-image: url(about:blank);
 }

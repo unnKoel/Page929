@@ -1,4 +1,4 @@
-.affirm {
+#page929_affirm {
     position: fixed;
     z-index: 1000000;
     width: 370px;
@@ -15,7 +15,7 @@
     _margin-top: 7%;
 }
 
-.affirm .btn_close {
+#page929_affirm .btn_close {
     width: 42px;
     height: 42px;
     top: 0;
@@ -25,11 +25,11 @@
     background: transparent url("./images/lab_lg_icons.gif") no-repeat scroll -80px -190px;
 }
 
-.affirm .msg {
+#page929_affirm .msg {
     padding: 20px 0;
 }
 
-.affirm .msg .icon {
+#page929_affirm .msg .icon {
     float: left;
     width: 34px;
     height: 34px;
@@ -37,7 +37,7 @@
     background-position: -20px -138px;
 }
 
-.affirm .msg .word {
+#page929_affirm .msg .word {
     float: left;
     font-size: 16px;
     line-height: 33px;
@@ -45,14 +45,14 @@
     margin-left: 10px;
 }
 
-.affirm .sure {
+#page929_affirm .sure {
     float: left;
     width: 100px;
     padding: 10px 0;
     margin-left: 43px;
 }
 
-.affirm .cancel {
+#page929_affirm .cancel {
     float: right;
     width: 100px;
     padding: 10px 0;

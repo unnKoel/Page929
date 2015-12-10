@@ -186,8 +186,8 @@ define(function (require) {
             },
 
             toLogin: {  //跳转到登陆页
-                setBackTo: function (forwardUrl) {  //设置登陆页登陆完，返回url，命名backUrl(base64加密)
-                    base.url.forward('/uc_login.html', 'go', base64.encode(forwardUrl))
+                setBackTo: function (forwardUrl, loginUrl) {  //设置登陆页登陆完，返回url，命名backUrl(base64加密)
+                    base.url.forward(loginUrl, 'go', base64.encode(forwardUrl))
                 },
 
                 backTo: function () {  //调用此方法，返回到backUrl

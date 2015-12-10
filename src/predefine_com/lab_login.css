@@ -1,4 +1,4 @@
-.login-form {
+#page929_login {
     position: fixed;
     z-index: 4;
     width: 370px;
@@ -14,19 +14,19 @@
     _margin-top: 7%;
 }
 
-.login-form .login-box .mt {
+#page929_login .login-box .mt {
     display: block;
     width: 275px;
     overflow: visible;
     margin: 0 auto;
 }
 
-.login-form .login-box .mt div {
+#page929_login .login-box .mt div {
     height: 110px;
     background: transparent url("./images/lab_lg_icons.gif") no-repeat scroll 30px 0;
 }
 
-.login-form .login-box .mt h1 {
+#page929_login .login-box .mt h1 {
     height: 30px;
     line-height: 30px;
     top: -5px;
@@ -35,7 +35,7 @@
     font-size: 18px;
 }
 
-.login-form .login-box .mt h1 > em {
+#page929_login .login-box .mt h1 > em {
     float: left;
     height: 30px;
     width: 25px;
@@ -43,26 +43,26 @@
     margin-right: 8px;
 }
 
-.login-form .login-box .mt h1 > span {
+#page929_login .login-box .mt h1 > span {
     float: left;
     height: 30px;
     line-height: 38px;
 }
 
-.login-form .login-box .mt .extra-r {
+#page929_login .login-box .mt .extra-r {
     float: right;
 }
 
-.login-form .login-box .mt .regist-link {
+#page929_login .login-box .mt .regist-link {
     color: #B61D1D;
     font-size: 14px;
 }
 
-.login-form .login-box .mt .regist-link a {
+#page929_login .login-box .mt .regist-link a {
     color: #B61D1D;
 }
 
-/*.login-form .login-box .mt::after {*/
+/*#page929_login .login-box .mt::after {*/
 /*content: ".";*/
 /*display: block;*/
 /*height: 0px;*/
@@ -70,12 +70,12 @@
 /*visibility: hidden;*/
 /*}*/
 
-.login-form .wrap div {
+#page929_login .wrap div {
     height: 40px;
     background: transparent url("./images/lab_lg_icons.gif") no-repeat scroll 0px -135px;
 }
 
-.login-form .msg-error {
+#page929_login .msg-error {
     background: #FFEBEB;
     color: #E4393C;
     border: 1px solid #E4393C;
@@ -86,7 +86,7 @@
     zoom: 1;
 }
 
-.login-form .msg-error:after {
+#page929_login .msg-error:after {
     content: ".";
     display: block;
     height: 0;
@@ -94,7 +94,7 @@
     visibility: hidden;
 }
 
-.login-form .msg-error b {
+#page929_login .msg-error b {
     position: absolute;
     top: 50%;
     left: 10px;
@@ -107,43 +107,43 @@
 
 }
 
-.login-form .login-box .mc {
+#page929_login .login-box .mc {
     overflow: visible;
 }
 
-.login-form .login-box .mc .form {
+#page929_login .login-box .mc .form {
     width: 360px;
     margin-left: 6px;
     margin-top: 15px;
 }
 
-.form .item-fore1 {
+#page929_login .form .item-fore1 {
     z-index: 6;
     /*+ margin-top : - 20 px;*/
 }
 
-.form .item-fore1, .form .item-fore2 {
+#page929_login .form .item-fore1, .form .item-fore2 {
     border: 1px solid #ccc;
     height: 38px;
     width: 358px;
     border-radius: 5px;
 }
 
-.form .item {
+#page929_login .form .item {
     position: relative;
     margin-bottom: 20px;
     z-index: 1;
 }
 
-.form .item span {
+#page929_login .form .item span {
     margin-left: 10px;
 }
 
-.form .item .name-label {
+#page929_login .form .item .name-label {
     background-position: 0 0;
 }
 
-.form .item .login-label {
+#page929_login .form .item .login-label {
     position: absolute;
     z-index: 3;
     top: 0;
@@ -153,11 +153,11 @@
     background: transparent url("./images/lab_lg_icons.gif") no-repeat scroll -10px -233px;
 }
 
-.form label {
+#page929_login .form label {
     float: none;
 }
 
-.form .itxt {
+#page929_login .form .itxt {
     border: 0;
     padding: 0 15px 0 45px;
     width: 280px;
@@ -169,23 +169,23 @@
     font-size: 13px;
 }
 
-.form .item-fore2 {
+#page929_login .form .item-fore2 {
     height: 38px;
     /*+ margin-bottom : 15 px;*/
 }
 
-.form .capslock {
+#page929_login .form .capslock {
     display: none;
 }
 
-.form .item-fore3 {
+#page929_login .form .item-fore3 {
     overflow: hidden;
     z-index: 5;
     margin-bottom: 0;
     zoom: 1;
 }
 
-.form .item-fore3:after {
+#page929_login .form .item-fore3:after {
     content: ".";
     display: block;
     height: 0;
@@ -193,7 +193,7 @@
     visibility: hidden;
 }
 
-.login-form .login-box .safe {
+#page929_login .login-box .safe {
     position: relative;
     color: #666;
     height: 18px;
@@ -201,15 +201,15 @@
     zoom: 1;
 }
 
-.login-form .login-box .safe span.rem {
+#page929_login .login-box .safe span.rem {
     margin-left: 10px;
 }
 
-.login-form .login-box .safe span.forget-pw-safe {
+#page929_login .login-box .safe span.forget-pw-safe {
     margin-right: 10px;
 }
 
-.login-form .login-box .safe:after {
+#page929_login .login-box .safe:after {
     content: ".";
     display: block;
     height: 0;
@@ -217,7 +217,7 @@
     visibility: hidden;
 }
 
-.login-form .login-box .safe .forget-pw-safe {
+#page929_login .login-box .safe .forget-pw-safe {
     position: absolute;
     right: 0;
     top: 0;
@@ -225,31 +225,31 @@
     /*+ top : 7 px*/
 }
 
-.form .jdcheckbox, .form .jdradio {
+#page929_login .form .jdcheckbox, .form .jdradio {
     float: none;
     vertical-align: middle;
     margin: 0 3px 0 0;
     padding: 0;
 }
 
-.form label {
+#page929_login .form label {
     float: none;
 }
 
-.form .item .pwd-label {
+#page929_login .form .item .pwd-label {
     background-position: -10px -282px;
 }
 
-.login-form .login-box .login-btn {
+#page929_login .login-box .login-btn {
     margin: 0 auto;
     height: 33px;
     position: relative;
 }
 
-.login-form .login-box .login-btn .btn-img {
+#page929_login .login-box .login-btn .btn-img {
     border: 1px solid #3B80E5;
     display: block;
-    background: #3B80E5 none repeat scroll 0% 0%;
+    background: #3B80E5 none repeat scroll 0 0;
     height: 40px;
     line-height: 40px;
     color: #FFF;
@@ -258,13 +258,13 @@
     border-radius: 5px;
 }
 
-.overlay-mask {
-    background: #000 none repeat scroll 0% 0%;
+.page929_overlay_mask {
+    background: #000 none repeat scroll 0 0;
     opacity: 0.15;
     filter: alpha(opacity=15);
 }
 
-.login-form .btn_close {
+#page929_login .btn_close {
     width: 42px;
     height: 42px;
     top: 0;
@@ -274,35 +274,35 @@
     background: transparent url("./images/lab_lg_icons.gif") no-repeat scroll -80px -190px;
 }
 
-.login-form .wrap {
+#page929_login .wrap {
     min-height: 31px;
     height: 31px !important;
     margin: 4px 0 0;
 }
 
-.login-form .msg-wrap {
+#page929_login .msg-wrap {
     min-height: 31px;
     height: 31px !important;
     margin: 4px 0 0;
 }
 
-.login-form .msg-wrap div {
+#page929_login .msg-wrap div {
     height: 20px;
 }
 
-.form .item-focus {
+#page929_login .form .item-focus {
     border: 1px solid #3AA2EA;
 }
 
-.form .item-error {
+#page929_login .form .item-error {
     border: 1px solid #E4393C;
 }
 
-.form .item-focus {
+#page929_login .form .item-focus {
     border: 1px solid #3AA2EA;
 }
 
-.form .item-fore1 .clear-btn, .form .item-fore2 .clear-btn {
+#page929_login .form .item-fore1 .clear-btn, .form .item-fore2 .clear-btn {
     position: absolute;
     z-index: 20;
     right: 12px;
@@ -314,12 +314,6 @@
     display: none;
 }
 
-.form input:-webkit-autofill, .form textarea:-webkit-autofill, .form select:-webkit-autofill {
+#page929_login .form input:-webkit-autofill, .form textarea:-webkit-autofill, .form select:-webkit-autofill {
     background-color: #fff;
 }
-
-/* Remove IE's “clear field” X button
-input:-ms-clear, input:-ms-reveal {
-    display: none;
-}
-*/

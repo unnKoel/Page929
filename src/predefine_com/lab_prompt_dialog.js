@@ -7,6 +7,7 @@ define(function (require) {
             this.html = require('./lab_prompt_dialog.html');
             this.css = require('./lab_prompt_dialog.css');
             this.interactComs = {};
+            this.top_ele = !1;
             this.prompt_dialog = !1;
         };
 
@@ -18,9 +19,9 @@ define(function (require) {
     prompt_dialog.prototype.drew = function (container) {
         var dialog = require("../com/dialog");
         $(container).append(this.html);
-        var prompt_dialog = $('.prompt');
+        var prompt_dialog = this.top_ele = $('#page929_prompt');
         prompt_dialog.css('left', ($(container).width() - prompt_dialog.width()) / 2);
-        this.prompt_dialog = new dialog().init(".prompt", $(container));
+        this.prompt_dialog = new dialog().init("#page929_prompt", $(container));
         return this;
     };
 
@@ -35,8 +36,8 @@ define(function (require) {
      * @returns {prompt_dialog}
      */
     prompt_dialog.prototype.open = function (type, msg) {
-        $('.msg .icon').addClass(type),
-            $('.msg .word').html(msg),
+        this.top_ele.find('.msg .icon').addClass(type),
+            this.top_ele.find('.msg .word').html(msg),
             this.prompt_dialog.open();
         return this;
     };

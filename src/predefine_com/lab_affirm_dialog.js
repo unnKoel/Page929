@@ -7,6 +7,7 @@ define(function (require) {
             this.html = require('./lab_affirm_dialog.html');
             this.css = require('./lab_affirm_dialog.css');
             this.interactComs = {};
+            this.top_ele = !1;
             this.affirm_dialog = !1;
         };
 
@@ -18,9 +19,9 @@ define(function (require) {
     affirm_dialog.prototype.drew = function (container) {
         var dialog = require("../com/dialog");
         $(container).append(this.html);
-        var affirm_dialog = $('.affirm');
+        var affirm_dialog = this.top_ele = $('#page929_affirm');
         affirm_dialog.css('left', ($(container).width() - affirm_dialog.width()) / 2);
-        this.affirm_dialog = new dialog().init(".affirm", $(container));
+        this.affirm_dialog = new dialog().init("#page929_affirm", $(container));
         return this;
     };
 
@@ -38,13 +39,13 @@ define(function (require) {
      */
     affirm_dialog.prototype.open = function (msg, sureCallback) {
         var self = this;
-        $('.affirm .word').html(msg),
-            $('.affirm .sure').on('click', function () {
+        self.top_ele.find('.word').html(msg),
+            self.top_ele.find('.sure').on('click', function () {
                 sureCallback();
                 self.affirm_dialog.close();
             }),
-            $('.affirm .cancel').on('click', function () {
-                $('.affirm .ks-overlay-close').click();
+            self.top_ele.find('.cancel').on('click', function () {
+                self.top_ele.find('.ks-overlay-close').click();
             });
         self.affirm_dialog.open();
         return this;

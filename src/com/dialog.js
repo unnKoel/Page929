@@ -24,8 +24,9 @@ define(function (require) {
             this.vesselEle = vesselEle;
             this.opts = opts;
             e(self.dialogEle).css("z-index", 100002).hide();
-            var jqVessel = e(self.vesselEle);
-            var jqOverlay = e('<div class="overlay-mask"></div>').css({
+            var jqVessel = e(self.vesselEle),
+                overlyClass = createOverlyClass(e(self.dialogEle).attr('id'));
+            var jqOverlay = e('<div class="' + overlyClass + '"></div>').css({
                 width: '100%',
                 position: 'absolute',
                 left: 0,
@@ -40,6 +41,10 @@ define(function (require) {
             });
             jqVessel.append(jqOverlay);
             return this;
+        };
+
+        var createOverlyClass = function (dialogId) {
+            return dialogId.substring(0, dialogId.indexOf('_')) + '_overlay_mask';
         };
 
         /**

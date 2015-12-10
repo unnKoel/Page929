@@ -1,21 +1,21 @@
-.head .myself {
+#page929_head .myself {
     height: 37px;
     line-height: 37px;
     background-color: #3770dc;
     color: #99ccff;
 }
 
-.head .myself .user {
+#page929_head .myself .user {
     float: right;
     line-height: 37px;
     _margin-top: 8px;
 }
 
-.head .myself .now_time {
+#page929_head .myself .now_time {
     float: left;
 }
 
-.head .myself .user em {
+#page929_head .myself .user em {
     display: inline-block;
     width: 8px;
     height: 8px;
@@ -25,19 +25,19 @@
     margin-right: 5px;
 }
 
-.head .myself .user a {
+#page929_head .myself .user a {
     color: #99ccff;
     margin-left: 15px;
 }
 
-.head .nav {
+#page929_head .nav {
     height: 90px;
     line-height: 90px;
     background-color: #fff;
     border-bottom: 2px solid #e9e9e9;
 }
 
-.head .nav .center_logo {
+#page929_head .nav .center_logo {
     float: left;
     margin-top: 40px;
     height: 37px;
@@ -46,12 +46,12 @@
     background: url('./images/lab_center_icon.png') no-repeat scroll;
 }
 
-.head .nav .lab_logo {
+#page929_head .nav .lab_logo {
     float: left;
     padding-top: 20px;
 }
 
-.tail {
+#page929_tail {
     text-align: center;
     height: 80px;
     background-color: #444e8e;

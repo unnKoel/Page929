@@ -7,7 +7,10 @@ module.exports = {
      */
     /**产品编译配置*/
     entry: {
-        'center': './assets/js/center.js'
+        'demo_base': './example/js/demo_base.js',
+        'demo_replace_head': './example/js/demo_replace_head.js',
+        'demo_replace_login': './example/js/demo_replace_login.js',
+        'demo_login': './example/js/demo_login.js'
     },
 
     output: {
@@ -41,9 +44,6 @@ module.exports = {
             },
             {
                 test: "\.png$", loader: "url-loader?mimetype=image/png"
-            },
-            {
-                test: /\.jsx?$/, loaders: ['jsx?harmony']
             }
         ]
     },
@@ -52,4 +52,3 @@ module.exports = {
         extensions: ['', '.js', '.json', '.coffee', '.scss', '.jsx']
     }
 };
-

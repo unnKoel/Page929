@@ -1,4 +1,4 @@
-.prompt {
+#page929_prompt {
     position: fixed;
     z-index: 1000000;
     width: 370px;
@@ -15,7 +15,7 @@
     _margin-top: 7%;
 }
 
-.prompt .btn_close {
+#page929_prompt .btn_close {
     width: 42px;
     height: 42px;
     top: 0;
@@ -25,11 +25,11 @@
     background: transparent url("./images/lab_lg_icons.gif") no-repeat scroll -80px -190px;
 }
 
-.prompt .msg {
+#page929_prompt .msg {
     padding: 20px 0;
 }
 
-.prompt .msg .icon {
+#page929_prompt .msg .icon {
     float: left;
     width: 34px;
     height: 34px;
@@ -37,15 +37,15 @@
     background-position: 0 0;
 }
 
-.prompt .msg .error {
+#page929_prompt .msg .error {
     background-position: -20px -76px;
 }
 
-.prompt .msg .succeed {
+#page929_prompt .msg .succeed {
     background-position: -20px -16px;
 }
 
-.prompt .msg .word {
+#page929_prompt .msg .word {
     float: left;
     font-size: 16px;
     line-height: 33px;

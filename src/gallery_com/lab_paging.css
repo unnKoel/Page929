@@ -2,13 +2,13 @@ a:hover {
     text-decoration: none;
 }
 
-.paging {
+#page929_paging {
     padding: 15px 20px;
     text-align: left;
     color: #ccc;
 }
 
-.paging a {
+#page929_paging a {
     display: inline-block;
     color: #666;
     height: 40px;
@@ -20,7 +20,7 @@ a:hover {
     text-align: center;
 }
 
-.paging a:hover {
+#page929_paging a:hover {
     text-decoration: none;
     /*border: 1px solid #428bca;*/
     border-left: 1px solid #428bca;
@@ -28,18 +28,18 @@ a:hover {
     border-top: 1px solid #428bca;
 }
 
-.paging .prevPage {
+#page929_paging .prevPage {
     width: 70px;
     text-align: center;
 }
 
-.paging .nextPage {
+#page929_paging .nextPage {
     width: 70px;
     text-align: center;
     border-right: 1px solid #ddd;
 }
 
-.paging span.current {
+#page929_paging span.current {
     display: inline-block;
     height: 40px;
     text-align: center;
@@ -50,7 +50,7 @@ a:hover {
     width: 40px;
 }
 
-.paging span {
+#page929_paging span {
     display: inline-block;
     height: 40px;
     width: 40px;
@@ -59,7 +59,7 @@ a:hover {
     border-left: 1px solid #ddd;
 }
 
-.paging span.disabled {
+#page929_paging span.disabled {
     display: inline-block;
     height: 40px;
     line-height: 40px;

@@ -4,6 +4,7 @@
 define(function (require) {
     var $ = require('./lib/jquery-1.11.2'),
         base = require('./lib/uc_base'),
+        basecss = require('./predefine_com/css/base.css'),
         shim = require('./lib/es5-shim'), //ie6-8 es5特性增强包
 
         /**
@@ -27,23 +28,27 @@ define(function (require) {
              * @param _com
              */
             build: function (_com) {
-                var comVessel = page.comVessel;  //组件容器
-                page._com_create(comVessel);  //创建默认组件
-                comVessel.lgCallback = page.config.user.lgCallback;
-                comVessel.unLgCallback = page.config.user.unLgCallback;
-                comVessel.ajax_output = page._ajax_output;
-                if (_com) {
-                    var comItems = _com;
-                    for (var name in comItems) {
-                        var comItem = comItems[name],
-                            com = comItem.load(),
-                            comObj = new com();
-                        comVessel['' + name] = comObj;
-                        comItems[name].obj = comObj;
+                try {
+                    var comVessel = page.comVessel;  //组件容器
+                    page._com_create(comVessel);  //创建默认组件
+                    comVessel.lgCallback = page.config.user.lgCallback;
+                    comVessel.unLgCallback = page.config.user.unLgCallback;
+                    comVessel.ajax_output = page._ajax_output;
+                    if (_com) {
+                        var comItems = _com;
+                        for (var name in comItems) {
+                            var comItem = comItems[name],
+                                com = comItem.load(),
+                                comObj = new com();
+                            comVessel['' + name] = comObj;
+                            comItems[name].obj = comObj;
+                        }
                     }
+                    var mergeComItems = $.extend({}, page.config.com, _com);
+                    page._com_interact(mergeComItems, comVessel); //组件交互
+                } catch (e) {
+                    console.log(e)
                 }
-                var mergeComItems = $.extend({}, page.config.com, _com);
-                page._com_interact(mergeComItems, comVessel); //组件交互
                 this.load();
             },
 
@@ -54,8 +59,6 @@ define(function (require) {
                 function requireLogin() {
                     return page.config.user.lgCallback != undefined || page.config.user.unLgCallback != undefined;
                 }
-
-                page.config._data_gather();//数据收集
 
                 page.config.common ? page.config.common() : !1,
                     requireLogin() ? (
@@ -69,22 +72,22 @@ define(function (require) {
                                     comVessel = page.comVessel;
                                 0 == result.code ?
                                     void(0 == result.code &&
-                                    (   //登陆回调
-                                        user = result.data,   //获取用户信息
-                                            page.config.user.user_type ?
-                                                (  //如果页面要求用户类型才可访问
-                                                    page.config.user.user_type == user.userType ?
-                                                        (
-                                                            comVessel.lab_head_tail.mod_user_status(user.name, comVessel.lab_login),
-                                                                page.config.user.lgCallback(user)
-                                                        ) :
-                                                        base.url.forward('/404.html') //页面身份不符合，跳404页
-                                                ) :
-                                                (
-                                                    comVessel.lab_head_tail.mod_user_status(user.name, comVessel.lab_login),
-                                                        page.config.user.lgCallback(user)
-                                                )
-                                    )
+                                        (   //登陆回调
+                                            user = result.data,   //获取用户信息
+                                                page.config.user.user_type ?
+                                                    (  //如果页面要求用户类型才可访问
+                                                        page.config.user.user_type == user.userType ?
+                                                            (
+                                                                comVessel.lab_head_tail.mod_user_status(user.name, comVessel.lab_login),
+                                                                    page.config.user.lgCallback(user)
+                                                            ) :
+                                                            base.url.forward('/404.html') //页面身份不符合，跳404页
+                                                    ) :
+                                                    (
+                                                        comVessel.lab_head_tail.mod_user_status(user.name, comVessel.lab_login),
+                                                            page.config.user.lgCallback(user)
+                                                    )
+                                        )
                                     ) :
                                     (
                                         page.config.user.unLgCallback ? page.config.user.unLgCallback() :   //未登陆回调
@@ -177,28 +180,28 @@ define(function (require) {
     page.config.com = {
         lab_prompt_dialog: {
             load: function () {
-                return require('./lab/lab_prompt_dialog')
+                return require('./predefine_com/lab_prompt_dialog')
             },
             site: '.page',
             interactCom: []
         },
         lab_affirm_dialog: {
             load: function () {
-                return require('./lab/lab_affirm_dialog')
+                return require('./predefine_com/lab_affirm_dialog')
             },
             site: '.page',
             interactCom: []
         },
         lab_head_tail: {
             load: function () {
-                return require('./lab/lab_head_tail')
+                return require('./predefine_com/lab_head_tail')
             },
             site: '.page',
             interactCom: ['lab_login']
         },
         lab_login: {
             load: function () {
-                return require('./lab/lab_login')
+                return require('./predefine_com/lab_login')
             },
             site: 'body',
             interactCom: ['lab_head_tail', 'lgCallback']

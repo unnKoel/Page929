@@ -9,26 +9,21 @@ define(function (require) {
         this.html = require('./lab_login.html');
         this.css = require('./lab_login.css');
         this.interactComs = {};
-        this.lg_dialog = !1;
         this.topLevelEle = !1;
 
         /**
-         * »æ»­µÇÂ½µ¯³ö¿ò
+         * ç»˜ç”»ç™»é™†å¼¹å‡ºæ¡†
          * @param container
          */
         this.drew = function (container) {
-            var dialog = require("../com/dialog");
             $(container).append(this.html);
             this.topLevelEle = $('#lg-form');
-            var lgForm = this.topLevelEle;
-            lgForm.css('left', ($(window).width() - lgForm.width()) / 2);
-            this.lg_dialog = new dialog().init("#lg-form", $(container));
             this.decorate();
             return this;
         };
 
         /**
-         *ÉèÖÃ½»»¥×é¼ş
+         *è®¾ç½®äº¤äº’ç»„ä»¶
          * @param interactComs
          */
         this.setInteractComs = function (interactComs) {
@@ -37,13 +32,13 @@ define(function (require) {
         };
 
         /**
-         * ui×°ÊÎ
+         * uiè£…é¥°
          */
         this.decorate = function () {
             base.ieCompatibility.JPlaceHolder.init();
             var supportPlaceHodler = base.ieCompatibility.JPlaceHolder._check(),
                 self = this;
-            if (!supportPlaceHodler) {  //Èç¹ûie£¬Çå¿ÕµÇÂ½ÊäÈë¿ò
+            if (!supportPlaceHodler) {  //å¦‚æœieï¼Œæ¸…ç©ºç™»é™†è¾“å…¥æ¡†
                 setTimeout(function () {
                     self.topLevelEle.find('#loginname').val('');
                     self.topLevelEle.find('#nloginpwd').val('');
@@ -54,7 +49,7 @@ define(function (require) {
                     var val = $(this).val(),
                         input = $(this),
                         closeEle = undefined;
-                    if (!supportPlaceHodler) {   //²»¼æÈİplaceHolderµÄieä¯ÀÀÆ÷
+                    if (!supportPlaceHodler) {   //ä¸å…¼å®¹placeHolderçš„ieæµè§ˆå™¨
                         closeEle = $(this).parent().next('.clear-btn')
                     } else {
                         closeEle = $(this).next('.clear-btn')
@@ -83,14 +78,7 @@ define(function (require) {
         };
 
         /**
-         * µÇÂ½µ¯´°´ò¿ª
-         */
-        this.open = function () {
-            this.lg_dialog.open();
-        };
-
-        /**
-         * °ó¶¨Ìá½»ÊÂ¼ş
+         * ç»‘å®šæäº¤äº‹ä»¶
          * @param opts
          */
         this.bind_submit = function () {
@@ -107,14 +95,14 @@ define(function (require) {
                 return 0 == $.trim(account).length && 0 == $.trim(pwd).length ? (
                     self.topLevelEle.find('.item-fore2').addClass('item-error'),
                         self.topLevelEle.find('.item-fore1').addClass('item-error'),
-                        self.topLevelEle.find('.msg-error').removeClass('hide').html('<b></b>ÇëÊäÈëÕË»§ÃûºÍÃÜÂë')
+                        self.topLevelEle.find('.msg-error').removeClass('hide').html('<b></b>è¯·è¾“å…¥è´¦æˆ·åå’Œå¯†ç ')
                 ) : (
                     0 == $.trim(account).length ? (
                         self.topLevelEle.find('.item-fore1').addClass('item-error'),
-                            self.topLevelEle.find('.msg-error').removeClass('hide').html('<b></b>ÇëÊäÈëÕË»§ÃûºÍÃÜÂë')
+                            self.topLevelEle.find('.msg-error').removeClass('hide').html('<b></b>è¯·è¾“å…¥è´¦æˆ·åå’Œå¯†ç ')
                     ) : ( 0 == $.trim(pwd).length ? (
                             self.topLevelEle.find('.item-fore2').addClass('item-error'),
-                                self.topLevelEle.find('.msg-error').removeClass('hide').html('<b></b>ÇëÊäÈëÕË»§ÃûºÍÃÜÂë')
+                                self.topLevelEle.find('.msg-error').removeClass('hide').html('<b></b>è¯·è¾“å…¥è´¦æˆ·åå’Œå¯†ç ')
                         ) : (
                             $.ajax({
                                     url: base.domain + "/hh/user/login",
@@ -129,12 +117,9 @@ define(function (require) {
                                     success: function (result) {
                                         0 == result.code ?
                                             void(0 == result.code && (
-                                                    base.cookieOperate.setCookie('caiker_uid', result.data.id, 20),
-                                                        self.lg_dialog.close(),
-                                                        self.interactComs.lab_head_tail.mod_user_status(result.data.name, self),
-                                                        self.interactComs.lgCallback(result.data)  //µÇÂ½»Øµ÷
+                                                    base.toLogin.backTo()
                                                 )
-                                            ) : self.topLevelEle.find('.msg-error').removeClass('hide').html('<b></b>ÕË»§ÃûÓëÃÜÂë²»Æ¥Åä£¬ÇëÖØĞÂÊäÈë');
+                                            ) : self.topLevelEle.find('.msg-error').removeClass('hide').html('<b></b>è´¦æˆ·åä¸å¯†ç ä¸åŒ¹é…ï¼Œè¯·é‡æ–°è¾“å…¥');
                                     }
                                 }
                             )

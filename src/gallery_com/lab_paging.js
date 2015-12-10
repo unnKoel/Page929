@@ -9,7 +9,7 @@ define(function (require) {
             var ms = this;
             return (function () {
                 container.empty();
-                container.append('<div class="paging"></div>');
+                container.append('<div class="paging" id="page929_paging"></div>');
                 var padingDiv = container.find('.paging');
                 ms.fillHtml(padingDiv, args);
                 ms.bindEvent(padingDiv, args);

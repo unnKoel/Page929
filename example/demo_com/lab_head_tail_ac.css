@@ -1,6 +1,6 @@
 .header-wrapper {
     width: 100%;
-    background: url(../../images/rp2/header-bg.png) repeat-x 0 0;
+    background: url(./images/header-bg.png) repeat-x 0 0;
 }
 
 .header-wrapper .header {
@@ -35,7 +35,7 @@
 .header-wrapper .sign-in {
     padding-left: 26px;
     margin-right: 33px;
-    background: url(../../images/rp2/user-ic.png) no-repeat 0 50%;
+    background: url(./images/user-ic.png) no-repeat 0 50%;
 }
 
 .lgOut_span {
@@ -44,6 +44,7 @@
     line-height: 42px;
     margin-right: 33px;
 }
+
 .lgOut_span em {
     display: inline-block;
     width: 8px;
@@ -57,4 +58,20 @@
 .lgOut_span a {
     color: #99ccff;
     margin-left: 15px;
+}
+
+.header-wrapper .header .f-l {
+    float: left;
+}
+
+.header-wrapper .header .f-r {
+    float: right;
+}
+
+.tail {
+    text-align: center;
+    height: 42px;
+    line-height: 42px;
+    color: #707E91;
+    background: transparent url(./images/header-bg.png) repeat-x 0 0;
 }
