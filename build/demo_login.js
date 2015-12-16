@@ -53,7 +53,7 @@
 	        {
 	            lab_login: {
 	                load: function () {
-	                    return __webpack_require__(32)
+	                    return __webpack_require__(42)
 	                },
 	                site: '#login',
 	                interactCom: []
@@ -97,25 +97,20 @@
 	             */
 	            build: function (_com) {
 	                try {
-	                    var comVessel = page.comVessel;  //组件容器
-	                    page._com_create(comVessel);  //创建默认组件
+	                    var comVessel = page.comVessel, //组件容器
+	                        mergeComItems = {};
+	                    page._com_create(comVessel, page.config.com);  //创建默认组件
 	                    comVessel.lgCallback = page.config.user.lgCallback;
 	                    comVessel.unLgCallback = page.config.user.unLgCallback;
 	                    comVessel.ajax_output = page._ajax_output;
-	                    if (_com) {
-	                        var comItems = _com;
-	                        for (var name in comItems) {
-	                            var comItem = comItems[name],
-	                                com = comItem.load(),
-	                                comObj = new com();
-	                            comVessel['' + name] = comObj;
-	                            comItems[name].obj = comObj;
-	                        }
-	                    }
-	                    var mergeComItems = $.extend({}, page.config.com, _com);
+	                    _com ? (
+	                        page._com_create(comVessel, _com),
+	                            mergeComItems = $.extend({}, page.config.com, _com)
+	                    ) : (
+	                        mergeComItems = page.config.com
+	                    );
 	                    page._com_interact(mergeComItems, comVessel); //组件交互
 	                } catch (e) {
-	                    console.log(e)
 	                }
 	                this.load();
 	            },
@@ -140,22 +135,22 @@
 	                                    comVessel = page.comVessel;
 	                                0 == result.code ?
 	                                    void(0 == result.code &&
-	                                    (   //登陆回调
-	                                        user = result.data,   //获取用户信息
-	                                            page.config.user.user_type ?
-	                                                (  //如果页面要求用户类型才可访问
-	                                                    page.config.user.user_type == user.userType ?
-	                                                        (
-	                                                            comVessel.lab_head_tail.mod_user_status(user.name, comVessel.lab_login),
-	                                                                page.config.user.lgCallback(user)
-	                                                        ) :
-	                                                        base.url.forward('/404.html') //页面身份不符合，跳404页
-	                                                ) :
-	                                                (
-	                                                    comVessel.lab_head_tail.mod_user_status(user.name, comVessel.lab_login),
-	                                                        page.config.user.lgCallback(user)
-	                                                )
-	                                    )
+	                                        (   //登陆回调
+	                                            user = result.data,   //获取用户信息
+	                                                page.config.user.user_type ?
+	                                                    (  //如果页面要求用户类型才可访问
+	                                                        page.config.user.user_type == user.userType ?
+	                                                            (
+	                                                                comVessel.lab_head_tail.mod_user_status(user.name, comVessel.lab_login),
+	                                                                    page.config.user.lgCallback(user)
+	                                                            ) :
+	                                                            base.url.forward('/404.html') //页面身份不符合，跳404页
+	                                                    ) :
+	                                                    (
+	                                                        comVessel.lab_head_tail.mod_user_status(user.name, comVessel.lab_login),
+	                                                            page.config.user.lgCallback(user)
+	                                                    )
+	                                        )
 	                                    ) :
 	                                    (
 	                                        page.config.user.unLgCallback ? page.config.user.unLgCallback() :   //未登陆回调
@@ -168,34 +163,71 @@
 	            /**
 	             * 创建页面组件
 	             * @param comVessel 组件容器
+	             * page.config.com
 	             */
-	            _com_create: function (comVessel) {
-	                var comItems = page.config.com;
+	            _com_create: function (comVessel, _comItems) {
+	                var comItems = _comItems;
 	                for (var name in comItems) {
-	                    var comItem = comItems[name],
-	                        com = comItem.load(),
-	                        comObj = new com();
-	                    comVessel['' + name] = comObj;
-	                    comItems[name].obj = comObj;
+	                    try {
+	                        var comItem = comItems[name],
+	                            loader = comItem.load;
+	                        if (loader) {
+	                            var com = loader(),
+	                                comObj = new com();
+	                            comVessel['' + name] = comObj;
+	                            comItems[name].obj = comObj;
+	                        } else {
+	                            comVessel['' + name] = null;
+	                        }
+	                    } catch (e) {
+	                    }
 	                }
 	            },
 
 	            /**
+	             *
+	             {
+	                lab_head_tail: {
+	                    load: function () {
+	                            return require('D:/project/Page929/example/demo_com/lab_head_tail_ac')
+	                        },
+	                        site: '.page',
+	                        interactCom: ['lab_login']
+	                    },
+
+	                    lab_login: {
+	                        load: function () {
+	                            return require('D:/project/Page929/example/demo_com/lab_goto_login')
+	                        },
+	                        site: '.page',
+	                        interactCom: []
+	                    }
+	            }
+	             *
 	             * 处理组件交互
 	             */
 	            _com_interact: function (mergeComItems, comVessel) {
 	                var comItems = mergeComItems;
 	                for (var i in comItems) {
-	                    var comItem = comItems[i],
-	                        comNames = comItem.interactCom,
-	                        interactComs = {};
-	                    comItem.obj.drew($(comItem.site));
-	                    for (var j = 0; j < comNames.length; j++) {
-	                        var comName = '' + comNames[j];
-	                        interactComs[comName] = comVessel[comName];
+	                    try {
+	                        var comItem = comItems[i],
+	                            comNames = comItem.interactCom,
+	                            site = comItem.site,
+	                            interactComs = {};
+	                        site ?   //是否配置了组件位置，没有则默认到以组件名命名的布局层中
+	                            comItem.obj.drew($(site))
+	                            :
+	                            (comItem.obj.drew($('#' + i)));
+	                        if (comNames) {   //配置了交互组件
+	                            for (var j = 0; j < comNames.length; j++) {
+	                                var comName = '' + comNames[j];
+	                                interactComs[comName] = comVessel[comName];
+	                            }
+	                            interactComs.ajax_output = page._ajax_output;
+	                            comItems[i].obj.setInteractComs(interactComs);
+	                        }
+	                    } catch (e) {
 	                    }
-	                    interactComs.ajax_output = page._ajax_output;
-	                    comItems[i].obj.setInteractComs(interactComs);
 	                }
 	            },
 
@@ -13835,143 +13867,7 @@
 	module.exports = __webpack_require__.p + "3fc916307e83cd42f053ac34e776194c.png";
 
 /***/ },
-/* 32 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_RESULT__;/**
-	 * Created by common on 2015/12/9.
-	 */
-	!(__WEBPACK_AMD_DEFINE_RESULT__ = function (require) {
-	    var $ = __webpack_require__(33),
-	        base = __webpack_require__(34);
-	    return function () {
-
-	        this.html = __webpack_require__(36);
-	        this.css = __webpack_require__(37);
-	        this.interactComs = {};
-	        this.topLevelEle = !1;
-
-	        /**
-	         * 绘画登陆弹出框
-	         * @param container
-	         */
-	        this.drew = function (container) {
-	            $(container).append(this.html);
-	            this.topLevelEle = $('#lg-form');
-	            this.decorate();
-	            return this;
-	        };
-
-	        /**
-	         *设置交互组件
-	         * @param interactComs
-	         */
-	        this.setInteractComs = function (interactComs) {
-	            this.interactComs = interactComs;
-	            this.bind_submit();
-	        };
-
-	        /**
-	         * ui装饰
-	         */
-	        this.decorate = function () {
-	            base.ieCompatibility.JPlaceHolder.init();
-	            var supportPlaceHodler = base.ieCompatibility.JPlaceHolder._check(),
-	                self = this;
-	            if (!supportPlaceHodler) {  //如果ie，清空登陆输入框
-	                setTimeout(function () {
-	                    self.topLevelEle.find('#loginname').val('');
-	                    self.topLevelEle.find('#nloginpwd').val('');
-	                }, 1);
-	            }
-	            self.topLevelEle.find('input').each(function () {
-	                $(this).keyup(function () {
-	                    var val = $(this).val(),
-	                        input = $(this),
-	                        closeEle = undefined;
-	                    if (!supportPlaceHodler) {   //不兼容placeHolder的ie浏览器
-	                        closeEle = $(this).parent().next('.clear-btn')
-	                    } else {
-	                        closeEle = $(this).next('.clear-btn')
-	                    }
-	                    var display = closeEle.css('display');
-	                    if (val && display != 'inline') {
-	                        closeEle.css('display', 'inline').click(function () {
-	                            supportPlaceHodler ? void(0) : input.next('span').show();
-	                            input.val(''),
-	                                $(this).css('display', 'none')
-	                        });
-	                        return;
-	                    }
-	                    if (!val) {
-	                        closeEle.css('display', 'none');
-	                    }
-	                });
-
-	                $(this).focus(function () {
-	                    self.topLevelEle.find('.msg-error').addClass('hide'),
-	                        $(this).parents('.highlight').removeClass('item-error').addClass('item-focus');
-	                }).blur(function () {
-	                    $(this).parents('.highlight').removeClass('item-focus');
-	                });
-	            });
-	        };
-
-	        /**
-	         * 绑定提交事件
-	         * @param opts
-	         */
-	        this.bind_submit = function () {
-	            var self = this;
-	            $(document).keyup(function (event) {
-	                if (event.keyCode == 13) {
-	                    self.topLevelEle.find('#loginsubmit').click();
-	                }
-	            });
-	            self.topLevelEle.find('#loginsubmit').click(function () {
-	                var account = self.topLevelEle.find("#loginname").val(),
-	                    pwd = self.topLevelEle.find("#nloginpwd").val(),
-	                    autoLogin = self.topLevelEle.find('#autoLogin').is(':checked') ? 1 : 0;
-	                return 0 == $.trim(account).length && 0 == $.trim(pwd).length ? (
-	                    self.topLevelEle.find('.item-fore2').addClass('item-error'),
-	                        self.topLevelEle.find('.item-fore1').addClass('item-error'),
-	                        self.topLevelEle.find('.msg-error').removeClass('hide').html('<b></b>请输入账户名和密码')
-	                ) : (
-	                    0 == $.trim(account).length ? (
-	                        self.topLevelEle.find('.item-fore1').addClass('item-error'),
-	                            self.topLevelEle.find('.msg-error').removeClass('hide').html('<b></b>请输入账户名和密码')
-	                    ) : ( 0 == $.trim(pwd).length ? (
-	                            self.topLevelEle.find('.item-fore2').addClass('item-error'),
-	                                self.topLevelEle.find('.msg-error').removeClass('hide').html('<b></b>请输入账户名和密码')
-	                        ) : (
-	                            $.ajax({
-	                                    url: base.domain + "/hh/user/login",
-	                                    type: "POST",
-	                                    dataType: "json",
-	                                    cache: !1,
-	                                    data: {
-	                                        account: account,
-	                                        password: pwd,
-	                                        rememberMe: autoLogin
-	                                    },
-	                                    success: function (result) {
-	                                        0 == result.code ?
-	                                            void(0 == result.code && (
-	                                                    base.toLogin.backTo()
-	                                                )
-	                                            ) : self.topLevelEle.find('.msg-error').removeClass('hide').html('<b></b>账户名与密码不匹配，请重新输入');
-	                                    }
-	                                }
-	                            )
-	                        )
-	                    )
-	                )
-	            });
-	        }
-	    };
-	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-
-/***/ },
+/* 32 */,
 /* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -24324,7 +24220,13 @@
 
 
 /***/ },
-/* 34 */
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -24332,7 +24234,7 @@
 	 */
 	!(__WEBPACK_AMD_DEFINE_RESULT__ = function (require) {
 
-	    var base64 = __webpack_require__(35),
+	    var base64 = __webpack_require__(41),
 	        base = {
 	            jump: 1,
 
@@ -24613,7 +24515,7 @@
 
 
 /***/ },
-/* 35 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -24733,19 +24635,156 @@
 
 
 /***/ },
-/* 36 */
+/* 42 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;/**
+	 * Created by common on 2015/12/9.
+	 */
+	!(__WEBPACK_AMD_DEFINE_RESULT__ = function (require) {
+	    var $ = __webpack_require__(33),
+	        base = __webpack_require__(40);
+	    return function () {
+
+	        this.html = __webpack_require__(43);
+	        this.css = __webpack_require__(44);
+	        this.interactComs = {};
+	        this.topLevelEle = !1;
+
+	        /**
+	         * 绘画登陆弹出框
+	         * @param container
+	         */
+	        this.drew = function (container) {
+	            $(container).append(this.html);
+	            this.topLevelEle = $('#lg-form');
+	            this.decorate();
+	            return this;
+	        };
+
+	        /**
+	         *设置交互组件
+	         * @param interactComs
+	         */
+	        this.setInteractComs = function (interactComs) {
+	            this.interactComs = interactComs;
+	            this.bind_submit();
+	        };
+
+	        /**
+	         * ui装饰
+	         */
+	        this.decorate = function () {
+	            base.ieCompatibility.JPlaceHolder.init();
+	            var supportPlaceHodler = base.ieCompatibility.JPlaceHolder._check(),
+	                self = this;
+	            if (!supportPlaceHodler) {  //如果ie，清空登陆输入框
+	                setTimeout(function () {
+	                    self.topLevelEle.find('#loginname').val('');
+	                    self.topLevelEle.find('#nloginpwd').val('');
+	                }, 1);
+	            }
+	            self.topLevelEle.find('input').each(function () {
+	                $(this).keyup(function () {
+	                    var val = $(this).val(),
+	                        input = $(this),
+	                        closeEle = undefined;
+	                    if (!supportPlaceHodler) {   //不兼容placeHolder的ie浏览器
+	                        closeEle = $(this).parent().next('.clear-btn')
+	                    } else {
+	                        closeEle = $(this).next('.clear-btn')
+	                    }
+	                    var display = closeEle.css('display');
+	                    if (val && display != 'inline') {
+	                        closeEle.css('display', 'inline').click(function () {
+	                            supportPlaceHodler ? void(0) : input.next('span').show();
+	                            input.val(''),
+	                                $(this).css('display', 'none')
+	                        });
+	                        return;
+	                    }
+	                    if (!val) {
+	                        closeEle.css('display', 'none');
+	                    }
+	                });
+
+	                $(this).focus(function () {
+	                    self.topLevelEle.find('.msg-error').addClass('hide'),
+	                        $(this).parents('.highlight').removeClass('item-error').addClass('item-focus');
+	                }).blur(function () {
+	                    $(this).parents('.highlight').removeClass('item-focus');
+	                });
+	            });
+	        };
+
+	        /**
+	         * 绑定提交事件
+	         * @param opts
+	         */
+	        this.bind_submit = function () {
+	            var self = this;
+	            $(document).keyup(function (event) {
+	                if (event.keyCode == 13) {
+	                    self.topLevelEle.find('#loginsubmit').click();
+	                }
+	            });
+	            self.topLevelEle.find('#loginsubmit').click(function () {
+	                var account = self.topLevelEle.find("#loginname").val(),
+	                    pwd = self.topLevelEle.find("#nloginpwd").val(),
+	                    autoLogin = self.topLevelEle.find('#autoLogin').is(':checked') ? 1 : 0;
+	                return 0 == $.trim(account).length && 0 == $.trim(pwd).length ? (
+	                    self.topLevelEle.find('.item-fore2').addClass('item-error'),
+	                        self.topLevelEle.find('.item-fore1').addClass('item-error'),
+	                        self.topLevelEle.find('.msg-error').removeClass('hide').html('<b></b>请输入账户名和密码')
+	                ) : (
+	                    0 == $.trim(account).length ? (
+	                        self.topLevelEle.find('.item-fore1').addClass('item-error'),
+	                            self.topLevelEle.find('.msg-error').removeClass('hide').html('<b></b>请输入账户名和密码')
+	                    ) : ( 0 == $.trim(pwd).length ? (
+	                            self.topLevelEle.find('.item-fore2').addClass('item-error'),
+	                                self.topLevelEle.find('.msg-error').removeClass('hide').html('<b></b>请输入账户名和密码')
+	                        ) : (
+	                            $.ajax({
+	                                    url: base.domain + "/hh/user/login",
+	                                    type: "POST",
+	                                    dataType: "json",
+	                                    cache: !1,
+	                                    data: {
+	                                        account: account,
+	                                        password: pwd,
+	                                        rememberMe: autoLogin
+	                                    },
+	                                    success: function (result) {
+	                                        0 == result.code ?
+	                                            void(0 == result.code && (
+	                                                    base.toLogin.backTo()
+	                                                )
+	                                            ) : self.topLevelEle.find('.msg-error').removeClass('hide').html('<b></b>账户名与密码不匹配，请重新输入');
+	                                    }
+	                                }
+	                            )
+	                        )
+	                    )
+	                )
+	            });
+	        }
+	    };
+	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+/***/ },
+/* 43 */
 /***/ function(module, exports) {
 
 	module.exports = "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <title></title>\r\n    <!--<link rel=\"stylesheet\" href=\"./css/base.css\">-->\r\n    <!--<link rel=\"stylesheet\" href=\"./lab_login.css\">-->\r\n</head>\r\n<body>\r\n<div class=\"login-form\" id=\"lg-form\">\r\n    <div class=\"login-box\">\r\n        <div class=\"mt\">\r\n            <div></div>\r\n        </div>\r\n        <div class=\"wrap\">\r\n            <div></div>\r\n        </div>\r\n        <div class=\"mc\">\r\n            <div class=\"form\">\r\n                <form id=\"formlogin\" method=\"post\" onsubmit=\"return false;\">\r\n\r\n                    <div class=\"item item-fore1 highlight\">\r\n                        <label for=\"loginname\" class=\"login-label name-label\"></label>\r\n                        <input id=\"loginname\" class=\"itxt\" name=\"loginname\" tabindex=\"1\" autocomplete=\"off\"\r\n                               placeholder=\"邮箱/已验证手机\" type=\"text\">\r\n                        <span class=\"clear-btn\"></span>\r\n                    </div>\r\n                    <div id=\"entry\" class=\"item item-fore2 highlight\">\r\n                        <label class=\"login-label pwd-label\" for=\"nloginpwd\"></label>\r\n                        <input id=\"nloginpwd\" name=\"nloginpwd\" class=\"itxt itxt-error\" tabindex=\"2\"\r\n                               autocomplete=\"off\" placeholder=\"密码\" type=\"password\">\r\n                        <span class=\"clear-btn\"></span>\r\n                        <span style=\"display: none;\" class=\"capslock\"><b></b>大小写锁定已打开</span>\r\n                    </div>\r\n                    <div class=\"item item-fore3\">\r\n                        <div class=\"safe\">\r\n                                        <span class=\"rem\">\r\n                                            <input id=\"autoLogin\" name=\"chkRememberMe\" class=\"jdcheckbox\" tabindex=\"3\"\r\n                                                   type=\"checkbox\">\r\n                                            <label>记住我</label>\r\n                                        </span>\r\n                                        <span class=\"forget-pw-safe\">\r\n                                            <a href=\"./uc_forgetpwd.html\" class=\"\" target=\"_blank\">忘记密码?</a>\r\n                                        </span>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"item-fore4\">\r\n                        <div class=\"msg-wrap\">\r\n                            <div class=\"msg-error hide\"><b></b></div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"item item-fore5\">\r\n                        <div class=\"login-btn\">\r\n                            <a href=\"javascript:;\" class=\"btn-img btn-entry\" id=\"loginsubmit\" tabindex=\"6\">立&nbsp;即&nbsp;登&nbsp;录</a>\r\n                        </div>\r\n                    </div>\r\n                </form>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"ks-overlay-close btn_close\"></div>\r\n</div>\r\n</body>\r\n</html>";
 
 /***/ },
-/* 37 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(38);
+	var content = __webpack_require__(45);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(8)(content, {});
@@ -24765,7 +24804,7 @@
 	}
 
 /***/ },
-/* 38 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(7)();
@@ -24773,19 +24812,19 @@
 
 
 	// module
-	exports.push([module.id, ".login-form {\r\n    position: relative;\r\n    z-index: 4;\r\n    width: 370px;\r\n    background: #FFF none repeat scroll 0% 0%;\r\n    padding: 20px;\r\n    overflow: visible;\r\n    border-radius: 5px;\r\n    top: 20%;\r\n    border: 1px solid #999;\r\n\r\n    _position: relative;\r\n    _bottom: auto;\r\n    _top: expression(eval(document.documentElement.scrollTop));\r\n    _margin-top: 7%;\r\n}\r\n\r\n.login-form .login-box .mt {\r\n    display: block;\r\n    width: 275px;\r\n    overflow: visible;\r\n    margin: 0 auto;\r\n}\r\n\r\n.login-form .login-box .mt div {\r\n    height: 110px;\r\n    background: transparent url(" + __webpack_require__(39) + ") no-repeat scroll 30px 0;\r\n}\r\n\r\n.login-form .login-box .mt h1 {\r\n    height: 30px;\r\n    line-height: 30px;\r\n    top: -5px;\r\n    float: left;\r\n    color: #3B80E5;\r\n    font-size: 18px;\r\n}\r\n\r\n.login-form .login-box .mt h1 > em {\r\n    float: left;\r\n    height: 30px;\r\n    width: 25px;\r\n    background: url(" + __webpack_require__(39) + ") repeat scroll -5px 5px;\r\n    margin-right: 8px;\r\n}\r\n\r\n.login-form .login-box .mt h1 > span {\r\n    float: left;\r\n    height: 30px;\r\n    line-height: 38px;\r\n}\r\n\r\n.login-form .login-box .mt .extra-r {\r\n    float: right;\r\n}\r\n\r\n.login-form .login-box .mt .regist-link {\r\n    color: #B61D1D;\r\n    font-size: 14px;\r\n}\r\n\r\n.login-form .login-box .mt .regist-link a {\r\n    color: #B61D1D;\r\n}\r\n\r\n/*.login-form .login-box .mt::after {*/\r\n/*content: \".\";*/\r\n/*display: block;*/\r\n/*height: 0px;*/\r\n/*clear: both;*/\r\n/*visibility: hidden;*/\r\n/*}*/\r\n\r\n.login-form .wrap div {\r\n    height: 40px;\r\n    background: transparent url(" + __webpack_require__(39) + ") no-repeat scroll 0px -135px;\r\n}\r\n\r\n.login-form .msg-error {\r\n    background: #FFEBEB;\r\n    color: #E4393C;\r\n    border: 1px solid #E4393C;\r\n    padding: 3px 10px 3px 40px;\r\n    line-height: 18px;\r\n    min-height: 18px;\r\n    position: relative;\r\n    zoom: 1;\r\n}\r\n\r\n.login-form .msg-error:after {\r\n    content: \".\";\r\n    display: block;\r\n    height: 0;\r\n    clear: both;\r\n    visibility: hidden;\r\n}\r\n\r\n.login-form .msg-error b {\r\n    position: absolute;\r\n    top: 50%;\r\n    left: 10px;\r\n    display: block;\r\n    margin-top: -8px;\r\n    width: 16px;\r\n    height: 16px;\r\n    overflow: hidden;\r\n    background: transparent url(" + __webpack_require__(39) + ") no-repeat scroll -25px -208px;\r\n\r\n}\r\n\r\n.login-form .login-box .mc {\r\n    overflow: visible;\r\n}\r\n\r\n.login-form .login-box .mc .form {\r\n    width: 360px;\r\n    margin-left: 6px;\r\n    margin-top: 15px;\r\n}\r\n\r\n.form .item-fore1 {\r\n    z-index: 6;\r\n    /*+ margin-top : - 20 px;*/\r\n}\r\n\r\n.form .item-fore1, .form .item-fore2 {\r\n    border: 1px solid #ccc;\r\n    height: 38px;\r\n    width: 358px;\r\n    border-radius: 5px;\r\n}\r\n\r\n.form .item {\r\n    position: relative;\r\n    margin-bottom: 20px;\r\n    z-index: 1;\r\n}\r\n\r\n.form .item span {\r\n    margin-left: 10px;\r\n}\r\n\r\n.form .item .name-label {\r\n    background-position: 0 0;\r\n}\r\n\r\n.form .item .login-label {\r\n    position: absolute;\r\n    z-index: 3;\r\n    top: 0;\r\n    width: 38px;\r\n    left: 5px;\r\n    height: 38px;\r\n    background: transparent url(" + __webpack_require__(39) + ") no-repeat scroll -20px -239px;\r\n}\r\n\r\n.form label {\r\n    float: none;\r\n}\r\n\r\n.form .itxt {\r\n    border: 0;\r\n    padding: 0 15px 0 45px;\r\n    width: 280px;\r\n    margin-left: 5px;\r\n    float: none;\r\n    overflow: hidden;\r\n    height: 37px;\r\n    line-height: 37px;\r\n    font-size: 13px;\r\n}\r\n\r\n.form .item-fore2 {\r\n    height: 38px;\r\n    /*+ margin-bottom : 15 px;*/\r\n}\r\n\r\n.form .capslock {\r\n    display: none;\r\n}\r\n\r\n.form .item-fore3 {\r\n    overflow: hidden;\r\n    z-index: 5;\r\n    margin-bottom: 0;\r\n    zoom: 1;\r\n}\r\n\r\n.form .item-fore3:after {\r\n    content: \".\";\r\n    display: block;\r\n    height: 0;\r\n    clear: both;\r\n    visibility: hidden;\r\n}\r\n\r\n.login-form .login-box .safe {\r\n    position: relative;\r\n    color: #666;\r\n    height: 18px;\r\n    line-height: 15px;\r\n    zoom: 1;\r\n}\r\n\r\n.login-form .login-box .safe span.rem {\r\n    margin-left: 10px;\r\n}\r\n\r\n.login-form .login-box .safe span.forget-pw-safe {\r\n    margin-right: 10px;\r\n}\r\n\r\n.login-form .login-box .safe:after {\r\n    content: \".\";\r\n    display: block;\r\n    height: 0;\r\n    clear: both;\r\n    visibility: hidden;\r\n}\r\n\r\n.login-form .login-box .safe .forget-pw-safe {\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    margin: 0;\r\n    /*+ top : 7 px*/\r\n}\r\n\r\n.form .jdcheckbox, .form .jdradio {\r\n    float: none;\r\n    vertical-align: middle;\r\n    margin: 0 3px 0 0;\r\n    padding: 0;\r\n}\r\n\r\n.form label {\r\n    float: none;\r\n}\r\n\r\n.form .item .pwd-label {\r\n    background-position: -20px -287px;\r\n}\r\n\r\n.login-form .login-box .login-btn {\r\n    margin: 0 auto;\r\n    height: 33px;\r\n    position: relative;\r\n}\r\n\r\n.login-form .login-box .login-btn .btn-img {\r\n    border: 1px solid #3B80E5;\r\n    display: block;\r\n    background: #3B80E5 none repeat scroll 0% 0%;\r\n    height: 40px;\r\n    line-height: 40px;\r\n    color: #FFF;\r\n    font-size: 16px;\r\n    font-weight: bold;\r\n    border-radius: 5px;\r\n}\r\n\r\n.overlay-mask {\r\n    background: #000 none repeat scroll 0% 0%;\r\n    opacity: 0.15;\r\n    filter: alpha(opacity=15);\r\n}\r\n\r\n.login-form .btn_close {\r\n    width: 42px;\r\n    height: 42px;\r\n    top: 0;\r\n    right: 15px;\r\n    position: absolute;\r\n    cursor: pointer;\r\n    background: transparent url(" + __webpack_require__(39) + ") no-repeat scroll -90px -196px;\r\n}\r\n\r\n.login-form .wrap {\r\n    min-height: 31px;\r\n    height: 31px !important;\r\n    margin: 4px 0 0;\r\n}\r\n\r\n.login-form .msg-wrap {\r\n    min-height: 31px;\r\n    height: 31px !important;\r\n    margin: 4px 0 0;\r\n}\r\n\r\n.login-form .msg-wrap div {\r\n    height: 20px;\r\n}\r\n\r\n.form .item-focus {\r\n    border: 1px solid #3AA2EA;\r\n}\r\n\r\n.form .item-error {\r\n    border: 1px solid #E4393C;\r\n}\r\n\r\n.form .item-focus {\r\n    border: 1px solid #3AA2EA;\r\n}\r\n\r\n.form .item-fore1 .clear-btn, .form .item-fore2 .clear-btn {\r\n    position: absolute;\r\n    z-index: 20;\r\n    right: 12px;\r\n    top: 12px;\r\n    width: 14px;\r\n    height: 14px;\r\n    background: transparent url(" + __webpack_require__(40) + ") no-repeat scroll -45px -173px;\r\n    cursor: pointer;\r\n    display: none;\r\n}\r\n\r\n.form input:-webkit-autofill, .form textarea:-webkit-autofill, .form select:-webkit-autofill {\r\n    background-color: #fff;\r\n}\r\n\r\n/* Remove IE's ��clear field�� X button\r\ninput:-ms-clear, input:-ms-reveal {\r\n    display: none;\r\n}\r\n*/", ""]);
+	exports.push([module.id, ".login-form {\r\n    position: relative;\r\n    z-index: 4;\r\n    width: 370px;\r\n    background: #FFF none repeat scroll 0% 0%;\r\n    padding: 20px;\r\n    overflow: visible;\r\n    border-radius: 5px;\r\n    top: 20%;\r\n    border: 1px solid #999;\r\n\r\n    _position: relative;\r\n    _bottom: auto;\r\n    _top: expression(eval(document.documentElement.scrollTop));\r\n    _margin-top: 7%;\r\n}\r\n\r\n.login-form .login-box .mt {\r\n    display: block;\r\n    width: 275px;\r\n    overflow: visible;\r\n    margin: 0 auto;\r\n}\r\n\r\n.login-form .login-box .mt div {\r\n    height: 110px;\r\n    background: transparent url(" + __webpack_require__(46) + ") no-repeat scroll 30px 0;\r\n}\r\n\r\n.login-form .login-box .mt h1 {\r\n    height: 30px;\r\n    line-height: 30px;\r\n    top: -5px;\r\n    float: left;\r\n    color: #3B80E5;\r\n    font-size: 18px;\r\n}\r\n\r\n.login-form .login-box .mt h1 > em {\r\n    float: left;\r\n    height: 30px;\r\n    width: 25px;\r\n    background: url(" + __webpack_require__(46) + ") repeat scroll -5px 5px;\r\n    margin-right: 8px;\r\n}\r\n\r\n.login-form .login-box .mt h1 > span {\r\n    float: left;\r\n    height: 30px;\r\n    line-height: 38px;\r\n}\r\n\r\n.login-form .login-box .mt .extra-r {\r\n    float: right;\r\n}\r\n\r\n.login-form .login-box .mt .regist-link {\r\n    color: #B61D1D;\r\n    font-size: 14px;\r\n}\r\n\r\n.login-form .login-box .mt .regist-link a {\r\n    color: #B61D1D;\r\n}\r\n\r\n/*.login-form .login-box .mt::after {*/\r\n/*content: \".\";*/\r\n/*display: block;*/\r\n/*height: 0px;*/\r\n/*clear: both;*/\r\n/*visibility: hidden;*/\r\n/*}*/\r\n\r\n.login-form .wrap div {\r\n    height: 40px;\r\n    background: transparent url(" + __webpack_require__(46) + ") no-repeat scroll 0px -135px;\r\n}\r\n\r\n.login-form .msg-error {\r\n    background: #FFEBEB;\r\n    color: #E4393C;\r\n    border: 1px solid #E4393C;\r\n    padding: 3px 10px 3px 40px;\r\n    line-height: 18px;\r\n    min-height: 18px;\r\n    position: relative;\r\n    zoom: 1;\r\n}\r\n\r\n.login-form .msg-error:after {\r\n    content: \".\";\r\n    display: block;\r\n    height: 0;\r\n    clear: both;\r\n    visibility: hidden;\r\n}\r\n\r\n.login-form .msg-error b {\r\n    position: absolute;\r\n    top: 50%;\r\n    left: 10px;\r\n    display: block;\r\n    margin-top: -8px;\r\n    width: 16px;\r\n    height: 16px;\r\n    overflow: hidden;\r\n    background: transparent url(" + __webpack_require__(46) + ") no-repeat scroll -25px -208px;\r\n\r\n}\r\n\r\n.login-form .login-box .mc {\r\n    overflow: visible;\r\n}\r\n\r\n.login-form .login-box .mc .form {\r\n    width: 360px;\r\n    margin-left: 6px;\r\n    margin-top: 15px;\r\n}\r\n\r\n.form .item-fore1 {\r\n    z-index: 6;\r\n    /*+ margin-top : - 20 px;*/\r\n}\r\n\r\n.form .item-fore1, .form .item-fore2 {\r\n    border: 1px solid #ccc;\r\n    height: 38px;\r\n    width: 358px;\r\n    border-radius: 5px;\r\n}\r\n\r\n.form .item {\r\n    position: relative;\r\n    margin-bottom: 20px;\r\n    z-index: 1;\r\n}\r\n\r\n.form .item span {\r\n    margin-left: 10px;\r\n}\r\n\r\n.form .item .name-label {\r\n    background-position: 0 0;\r\n}\r\n\r\n.form .item .login-label {\r\n    position: absolute;\r\n    z-index: 3;\r\n    top: 0;\r\n    width: 38px;\r\n    left: 5px;\r\n    height: 38px;\r\n    background: transparent url(" + __webpack_require__(46) + ") no-repeat scroll -20px -239px;\r\n}\r\n\r\n.form label {\r\n    float: none;\r\n}\r\n\r\n.form .itxt {\r\n    border: 0;\r\n    padding: 0 15px 0 45px;\r\n    width: 280px;\r\n    margin-left: 5px;\r\n    float: none;\r\n    overflow: hidden;\r\n    height: 37px;\r\n    line-height: 37px;\r\n    font-size: 13px;\r\n}\r\n\r\n.form .item-fore2 {\r\n    height: 38px;\r\n    /*+ margin-bottom : 15 px;*/\r\n}\r\n\r\n.form .capslock {\r\n    display: none;\r\n}\r\n\r\n.form .item-fore3 {\r\n    overflow: hidden;\r\n    z-index: 5;\r\n    margin-bottom: 0;\r\n    zoom: 1;\r\n}\r\n\r\n.form .item-fore3:after {\r\n    content: \".\";\r\n    display: block;\r\n    height: 0;\r\n    clear: both;\r\n    visibility: hidden;\r\n}\r\n\r\n.login-form .login-box .safe {\r\n    position: relative;\r\n    color: #666;\r\n    height: 18px;\r\n    line-height: 15px;\r\n    zoom: 1;\r\n}\r\n\r\n.login-form .login-box .safe span.rem {\r\n    margin-left: 10px;\r\n}\r\n\r\n.login-form .login-box .safe span.forget-pw-safe {\r\n    margin-right: 10px;\r\n}\r\n\r\n.login-form .login-box .safe:after {\r\n    content: \".\";\r\n    display: block;\r\n    height: 0;\r\n    clear: both;\r\n    visibility: hidden;\r\n}\r\n\r\n.login-form .login-box .safe .forget-pw-safe {\r\n    position: absolute;\r\n    right: 0;\r\n    top: 0;\r\n    margin: 0;\r\n    /*+ top : 7 px*/\r\n}\r\n\r\n.form .jdcheckbox, .form .jdradio {\r\n    float: none;\r\n    vertical-align: middle;\r\n    margin: 0 3px 0 0;\r\n    padding: 0;\r\n}\r\n\r\n.form label {\r\n    float: none;\r\n}\r\n\r\n.form .item .pwd-label {\r\n    background-position: -20px -287px;\r\n}\r\n\r\n.login-form .login-box .login-btn {\r\n    margin: 0 auto;\r\n    height: 33px;\r\n    position: relative;\r\n}\r\n\r\n.login-form .login-box .login-btn .btn-img {\r\n    border: 1px solid #3B80E5;\r\n    display: block;\r\n    background: #3B80E5 none repeat scroll 0% 0%;\r\n    height: 40px;\r\n    line-height: 40px;\r\n    color: #FFF;\r\n    font-size: 16px;\r\n    font-weight: bold;\r\n    border-radius: 5px;\r\n}\r\n\r\n.overlay-mask {\r\n    background: #000 none repeat scroll 0% 0%;\r\n    opacity: 0.15;\r\n    filter: alpha(opacity=15);\r\n}\r\n\r\n.login-form .btn_close {\r\n    width: 42px;\r\n    height: 42px;\r\n    top: 0;\r\n    right: 15px;\r\n    position: absolute;\r\n    cursor: pointer;\r\n    background: transparent url(" + __webpack_require__(46) + ") no-repeat scroll -90px -196px;\r\n}\r\n\r\n.login-form .wrap {\r\n    min-height: 31px;\r\n    height: 31px !important;\r\n    margin: 4px 0 0;\r\n}\r\n\r\n.login-form .msg-wrap {\r\n    min-height: 31px;\r\n    height: 31px !important;\r\n    margin: 4px 0 0;\r\n}\r\n\r\n.login-form .msg-wrap div {\r\n    height: 20px;\r\n}\r\n\r\n.form .item-focus {\r\n    border: 1px solid #3AA2EA;\r\n}\r\n\r\n.form .item-error {\r\n    border: 1px solid #E4393C;\r\n}\r\n\r\n.form .item-focus {\r\n    border: 1px solid #3AA2EA;\r\n}\r\n\r\n.form .item-fore1 .clear-btn, .form .item-fore2 .clear-btn {\r\n    position: absolute;\r\n    z-index: 20;\r\n    right: 12px;\r\n    top: 12px;\r\n    width: 14px;\r\n    height: 14px;\r\n    background: transparent url(" + __webpack_require__(47) + ") no-repeat scroll -45px -173px;\r\n    cursor: pointer;\r\n    display: none;\r\n}\r\n\r\n.form input:-webkit-autofill, .form textarea:-webkit-autofill, .form select:-webkit-autofill {\r\n    background-color: #fff;\r\n}\r\n\r\n/* Remove IE's ��clear field�� X button\r\ninput:-ms-clear, input:-ms-reveal {\r\n    display: none;\r\n}\r\n*/", ""]);
 
 	// exports
 
 
 /***/ },
-/* 39 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "a0e788067273e3d86bdb78d52a67778d.gif";
 
 /***/ },
-/* 40 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "3fc916307e83cd42f053ac34e776194c.png";

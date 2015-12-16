@@ -10,7 +10,9 @@ module.exports = {
         'demo_base': './example/js/demo_base.js',
         'demo_replace_head': './example/js/demo_replace_head.js',
         'demo_replace_login': './example/js/demo_replace_login.js',
-        'demo_login': './example/js/demo_login.js'
+        'demo_login': './example/js/demo_login.js',
+        'demo_default_site': './example/js/demo_default_site.js',
+        'demo_remove_head': './example/js/demo_remove_head.js'
     },
 
     output: {

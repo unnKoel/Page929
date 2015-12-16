@@ -61,7 +61,7 @@
 	        {
 	            lab_head_tail: {
 	                load: function () {
-	                    return __webpack_require__(41)
+	                    return __webpack_require__(32)
 	                },
 	                site: '.page',
 	                interactCom: ['lab_login']
@@ -105,25 +105,20 @@
 	             */
 	            build: function (_com) {
 	                try {
-	                    var comVessel = page.comVessel;  //组件容器
-	                    page._com_create(comVessel);  //创建默认组件
+	                    var comVessel = page.comVessel, //组件容器
+	                        mergeComItems = {};
+	                    page._com_create(comVessel, page.config.com);  //创建默认组件
 	                    comVessel.lgCallback = page.config.user.lgCallback;
 	                    comVessel.unLgCallback = page.config.user.unLgCallback;
 	                    comVessel.ajax_output = page._ajax_output;
-	                    if (_com) {
-	                        var comItems = _com;
-	                        for (var name in comItems) {
-	                            var comItem = comItems[name],
-	                                com = comItem.load(),
-	                                comObj = new com();
-	                            comVessel['' + name] = comObj;
-	                            comItems[name].obj = comObj;
-	                        }
-	                    }
-	                    var mergeComItems = $.extend({}, page.config.com, _com);
+	                    _com ? (
+	                        page._com_create(comVessel, _com),
+	                            mergeComItems = $.extend({}, page.config.com, _com)
+	                    ) : (
+	                        mergeComItems = page.config.com
+	                    );
 	                    page._com_interact(mergeComItems, comVessel); //组件交互
 	                } catch (e) {
-	                    console.log(e)
 	                }
 	                this.load();
 	            },
@@ -148,22 +143,22 @@
 	                                    comVessel = page.comVessel;
 	                                0 == result.code ?
 	                                    void(0 == result.code &&
-	                                    (   //登陆回调
-	                                        user = result.data,   //获取用户信息
-	                                            page.config.user.user_type ?
-	                                                (  //如果页面要求用户类型才可访问
-	                                                    page.config.user.user_type == user.userType ?
-	                                                        (
-	                                                            comVessel.lab_head_tail.mod_user_status(user.name, comVessel.lab_login),
-	                                                                page.config.user.lgCallback(user)
-	                                                        ) :
-	                                                        base.url.forward('/404.html') //页面身份不符合，跳404页
-	                                                ) :
-	                                                (
-	                                                    comVessel.lab_head_tail.mod_user_status(user.name, comVessel.lab_login),
-	                                                        page.config.user.lgCallback(user)
-	                                                )
-	                                    )
+	                                        (   //登陆回调
+	                                            user = result.data,   //获取用户信息
+	                                                page.config.user.user_type ?
+	                                                    (  //如果页面要求用户类型才可访问
+	                                                        page.config.user.user_type == user.userType ?
+	                                                            (
+	                                                                comVessel.lab_head_tail.mod_user_status(user.name, comVessel.lab_login),
+	                                                                    page.config.user.lgCallback(user)
+	                                                            ) :
+	                                                            base.url.forward('/404.html') //页面身份不符合，跳404页
+	                                                    ) :
+	                                                    (
+	                                                        comVessel.lab_head_tail.mod_user_status(user.name, comVessel.lab_login),
+	                                                            page.config.user.lgCallback(user)
+	                                                    )
+	                                        )
 	                                    ) :
 	                                    (
 	                                        page.config.user.unLgCallback ? page.config.user.unLgCallback() :   //未登陆回调
@@ -176,34 +171,71 @@
 	            /**
 	             * 创建页面组件
 	             * @param comVessel 组件容器
+	             * page.config.com
 	             */
-	            _com_create: function (comVessel) {
-	                var comItems = page.config.com;
+	            _com_create: function (comVessel, _comItems) {
+	                var comItems = _comItems;
 	                for (var name in comItems) {
-	                    var comItem = comItems[name],
-	                        com = comItem.load(),
-	                        comObj = new com();
-	                    comVessel['' + name] = comObj;
-	                    comItems[name].obj = comObj;
+	                    try {
+	                        var comItem = comItems[name],
+	                            loader = comItem.load;
+	                        if (loader) {
+	                            var com = loader(),
+	                                comObj = new com();
+	                            comVessel['' + name] = comObj;
+	                            comItems[name].obj = comObj;
+	                        } else {
+	                            comVessel['' + name] = null;
+	                        }
+	                    } catch (e) {
+	                    }
 	                }
 	            },
 
 	            /**
+	             *
+	             {
+	                lab_head_tail: {
+	                    load: function () {
+	                            return require('D:/project/Page929/example/demo_com/lab_head_tail_ac')
+	                        },
+	                        site: '.page',
+	                        interactCom: ['lab_login']
+	                    },
+
+	                    lab_login: {
+	                        load: function () {
+	                            return require('D:/project/Page929/example/demo_com/lab_goto_login')
+	                        },
+	                        site: '.page',
+	                        interactCom: []
+	                    }
+	            }
+	             *
 	             * 处理组件交互
 	             */
 	            _com_interact: function (mergeComItems, comVessel) {
 	                var comItems = mergeComItems;
 	                for (var i in comItems) {
-	                    var comItem = comItems[i],
-	                        comNames = comItem.interactCom,
-	                        interactComs = {};
-	                    comItem.obj.drew($(comItem.site));
-	                    for (var j = 0; j < comNames.length; j++) {
-	                        var comName = '' + comNames[j];
-	                        interactComs[comName] = comVessel[comName];
+	                    try {
+	                        var comItem = comItems[i],
+	                            comNames = comItem.interactCom,
+	                            site = comItem.site,
+	                            interactComs = {};
+	                        site ?   //是否配置了组件位置，没有则默认到以组件名命名的布局层中
+	                            comItem.obj.drew($(site))
+	                            :
+	                            (comItem.obj.drew($('#' + i)));
+	                        if (comNames) {   //配置了交互组件
+	                            for (var j = 0; j < comNames.length; j++) {
+	                                var comName = '' + comNames[j];
+	                                interactComs[comName] = comVessel[comName];
+	                            }
+	                            interactComs.ajax_output = page._ajax_output;
+	                            comItems[i].obj.setInteractComs(interactComs);
+	                        }
+	                    } catch (e) {
 	                    }
-	                    interactComs.ajax_output = page._ajax_output;
-	                    comItems[i].obj.setInteractComs(interactComs);
 	                }
 	            },
 
@@ -13843,7 +13875,83 @@
 	module.exports = __webpack_require__.p + "3fc916307e83cd42f053ac34e776194c.png";
 
 /***/ },
-/* 32 */,
+/* 32 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;/**
+	 * Created by common on 2015/12/3.
+	 */
+	!(__WEBPACK_AMD_DEFINE_RESULT__ = function (require) {
+	    var $ = __webpack_require__(33),
+	        head_tail = function () {
+	            this.html = __webpack_require__(34);
+	            this.css = __webpack_require__(36);
+	            this.interactComs = {};
+	            this.head_html = this.html;
+	            this.tail_html = !1;
+	        };
+	    /**
+	     * 头尾绘画
+	     * @param main
+	     * @returns {head_tail}
+	     */
+	    head_tail.prototype.drew = function (main) {
+	        var html = this.html;
+	        head_index = html.indexOf('<div class="head">'),
+	            tail_index = html.indexOf('<div class="tail">');
+	        this.head_html = html.substring(head_index, tail_index);
+	        this.tail_html = html.substring(tail_index);
+	        $(main).before(this.head_html).after(this.tail_html);
+	        return this;
+	    };
+
+	    head_tail.prototype.setInteractComs = function (interactComs) {
+	        this.interactComs = interactComs;
+	        this.bind();
+	    };
+
+	    head_tail.prototype.bind = function () {
+	        var login_dialog = this.interactComs.lab_login;
+	        $('.sign-in').on('click', function () {
+	            login_dialog.open();
+	        })
+	    };
+
+	    /**
+	     * 修改导航栏用户状态
+	     * @param user_name
+	     */
+	    head_tail.prototype.mod_user_status = function (user_name) {
+	        var base = __webpack_require__(40);
+	        $('.header').append('<span class="lgOut_span"><em></em>' + user_name + '<a href="javascript:void(0);" class="lgOut">[退出]</a></span>');
+	        $('.header .sign-in').css('display', 'none');
+	        $('.lgOut').on('click', function () {
+	            $.ajax({
+	                    url: base.domain + "/hh/user/logout",
+	                    type: "POST",
+	                    dataType: "json",
+	                    cache: !1,
+	                    success: function (result) {
+	                        if (0 == result.code) {
+	                            void(0 == result.code && (
+	                                    //window.location.reload(),
+	                                    //com.login_dialog.open()
+	                                    $('.header .lgOut_span').remove()
+	                                )
+	                            )
+	                            $('.sign-in').show();
+	                        } else {
+	                            alert('退出失败');
+	                        }
+	                    }
+	                }
+	            )
+	        })
+	    };
+	    return head_tail;
+	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+/***/ },
 /* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -24199,12 +24307,76 @@
 /* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <title></title>\r\n    <!--<link rel=\"stylesheet\" href=\"../css/base.css\">-->\r\n    <!--<link rel=\"stylesheet\" href=\"./lab_head_tail_ac.css\">-->\r\n</head>\r\n<body>\r\n<div class=\"header-wrapper\">\r\n    <div class=\"header clearFloat\">\r\n        <a class=\"logo-link f-l\" href=\"\">\r\n            <img src=\"" + __webpack_require__(35) + "\"/>\r\n        </a>\r\n        <a class=\"index f-r\" href=\"\">首页</a>\r\n        <a class=\"sign-in f-r\" href=\"javascript:void (0);\">用户登录</a>\r\n    </div>\r\n\r\n    <div class=\"tail\">\r\n        <p>©2014-2015 XXXX 苏ICP备XX号-1 | XXX有限公司</p>\r\n    </div>\r\n</div>\r\n</body>\r\n</html>";
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "c9998ac5a3140cf2c68aeed6cb37462f.png";
+
+/***/ },
+/* 36 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(37);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(8)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./lab_head_tail_ac.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./lab_head_tail_ac.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 37 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(7)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".header-wrapper {\r\n    width: 100%;\r\n    background: url(" + __webpack_require__(38) + ") repeat-x 0 0;\r\n}\r\n\r\n.header-wrapper .header {\r\n    width: 1000px;\r\n    margin: auto;\r\n}\r\n\r\n.header-wrapper .logo-link,\r\n.header-wrapper .logo-link img {\r\n    display: block;\r\n    width: 165px;\r\n    height: 30px;\r\n}\r\n\r\n.header-wrapper .logo-link {\r\n    margin-top: 6px;\r\n}\r\n\r\n.header-wrapper .index,\r\n.header-wrapper .sign-in {\r\n    height: 42px;\r\n    line-height: 42px;\r\n    color: #707e91;\r\n    font-size: 14px;\r\n}\r\n\r\n.header-wrapper .index:hover,\r\n.header-wrapper .sign-in:hover {\r\n    color: #f60;\r\n}\r\n\r\n.header-wrapper .sign-in {\r\n    padding-left: 26px;\r\n    margin-right: 33px;\r\n    background: url(" + __webpack_require__(39) + ") no-repeat 0 50%;\r\n}\r\n\r\n.lgOut_span {\r\n    float: right;\r\n    height: 42px;\r\n    line-height: 42px;\r\n    margin-right: 33px;\r\n}\r\n\r\n.lgOut_span em {\r\n    display: inline-block;\r\n    width: 8px;\r\n    height: 8px;\r\n    border-radius: 50%;\r\n    background-color: #FA6348;\r\n    vertical-align: middle;\r\n    margin-right: 5px;\r\n}\r\n\r\n.lgOut_span a {\r\n    color: #99ccff;\r\n    margin-left: 15px;\r\n}\r\n\r\n.header-wrapper .header .f-l {\r\n    float: left;\r\n}\r\n\r\n.header-wrapper .header .f-r {\r\n    float: right;\r\n}\r\n\r\n.tail {\r\n    text-align: center;\r\n    height: 42px;\r\n    line-height: 42px;\r\n    color: #707E91;\r\n    background: transparent url(" + __webpack_require__(38) + ") repeat-x 0 0;\r\n}", ""]);
+
+	// exports
+
+
+/***/ },
+/* 38 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "369ae00ae0fbc525f1816ae80443c98a.png";
+
+/***/ },
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "8fe081cc183fbc533a591ae97d5f1a12.png";
+
+/***/ },
+/* 40 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var __WEBPACK_AMD_DEFINE_RESULT__;/**
 	 * Created by common on 2015/9/6.
 	 */
 	!(__WEBPACK_AMD_DEFINE_RESULT__ = function (require) {
 
-	    var base64 = __webpack_require__(35),
+	    var base64 = __webpack_require__(41),
 	        base = {
 	            jump: 1,
 
@@ -24485,7 +24657,7 @@
 
 
 /***/ },
-/* 35 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -24603,152 +24775,6 @@
 	    return Plugin;
 	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
-
-/***/ },
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_RESULT__;/**
-	 * Created by common on 2015/12/3.
-	 */
-	!(__WEBPACK_AMD_DEFINE_RESULT__ = function (require) {
-	    var $ = __webpack_require__(33),
-	        head_tail = function () {
-	            this.html = __webpack_require__(42);
-	            this.css = __webpack_require__(44);
-	            this.interactComs = {};
-	            this.head_html = this.html;
-	            this.tail_html = !1;
-	        };
-	    /**
-	     * 头尾绘画
-	     * @param main
-	     * @returns {head_tail}
-	     */
-	    head_tail.prototype.drew = function (main) {
-	        var html = this.html;
-	        head_index = html.indexOf('<div class="head">'),
-	            tail_index = html.indexOf('<div class="tail">');
-	        this.head_html = html.substring(head_index, tail_index);
-	        this.tail_html = html.substring(tail_index);
-	        $(main).before(this.head_html).after(this.tail_html);
-	        return this;
-	    };
-
-	    head_tail.prototype.setInteractComs = function (interactComs) {
-	        this.interactComs = interactComs;
-	        this.bind();
-	    };
-
-	    head_tail.prototype.bind = function () {
-	        var login_dialog = this.interactComs.lab_login;
-	        $('.sign-in').on('click', function () {
-	            login_dialog.open();
-	        })
-	    };
-
-	    /**
-	     * 修改导航栏用户状态
-	     * @param user_name
-	     */
-	    head_tail.prototype.mod_user_status = function (user_name) {
-	        var base = __webpack_require__(34);
-	        $('.header').append('<span class="lgOut_span"><em></em>' + user_name + '<a href="javascript:void(0);" class="lgOut">[退出]</a></span>');
-	        $('.header .sign-in').css('display', 'none');
-	        $('.lgOut').on('click', function () {
-	            $.ajax({
-	                    url: base.domain + "/hh/user/logout",
-	                    type: "POST",
-	                    dataType: "json",
-	                    cache: !1,
-	                    success: function (result) {
-	                        if (0 == result.code) {
-	                            void(0 == result.code && (
-	                                    //window.location.reload(),
-	                                    //com.login_dialog.open()
-	                                    $('.header .lgOut_span').remove()
-	                                )
-	                            )
-	                            $('.sign-in').show();
-	                        } else {
-	                            alert('退出失败');
-	                        }
-	                    }
-	                }
-	            )
-	        })
-	    };
-	    return head_tail;
-	}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-
-/***/ },
-/* 42 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = "<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <title></title>\r\n    <!--<link rel=\"stylesheet\" href=\"../css/base.css\">-->\r\n    <!--<link rel=\"stylesheet\" href=\"./lab_head_tail_ac.css\">-->\r\n</head>\r\n<body>\r\n<div class=\"header-wrapper\">\r\n    <div class=\"header clearFloat\">\r\n        <a class=\"logo-link f-l\" href=\"\">\r\n            <img src=\"" + __webpack_require__(43) + "\"/>\r\n        </a>\r\n        <a class=\"index f-r\" href=\"\">首页</a>\r\n        <a class=\"sign-in f-r\" href=\"javascript:void (0);\">用户登录</a>\r\n    </div>\r\n\r\n    <div class=\"tail\">\r\n        <p>©2014-2015 XXXX 苏ICP备XX号-1 | XXX有限公司</p>\r\n    </div>\r\n</div>\r\n</body>\r\n</html>";
-
-/***/ },
-/* 43 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "c9998ac5a3140cf2c68aeed6cb37462f.png";
-
-/***/ },
-/* 44 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(45);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(8)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./lab_head_tail_ac.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./lab_head_tail_ac.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 45 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(7)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".header-wrapper {\r\n    width: 100%;\r\n    background: url(" + __webpack_require__(46) + ") repeat-x 0 0;\r\n}\r\n\r\n.header-wrapper .header {\r\n    width: 1000px;\r\n    margin: auto;\r\n}\r\n\r\n.header-wrapper .logo-link,\r\n.header-wrapper .logo-link img {\r\n    display: block;\r\n    width: 165px;\r\n    height: 30px;\r\n}\r\n\r\n.header-wrapper .logo-link {\r\n    margin-top: 6px;\r\n}\r\n\r\n.header-wrapper .index,\r\n.header-wrapper .sign-in {\r\n    height: 42px;\r\n    line-height: 42px;\r\n    color: #707e91;\r\n    font-size: 14px;\r\n}\r\n\r\n.header-wrapper .index:hover,\r\n.header-wrapper .sign-in:hover {\r\n    color: #f60;\r\n}\r\n\r\n.header-wrapper .sign-in {\r\n    padding-left: 26px;\r\n    margin-right: 33px;\r\n    background: url(" + __webpack_require__(47) + ") no-repeat 0 50%;\r\n}\r\n\r\n.lgOut_span {\r\n    float: right;\r\n    height: 42px;\r\n    line-height: 42px;\r\n    margin-right: 33px;\r\n}\r\n\r\n.lgOut_span em {\r\n    display: inline-block;\r\n    width: 8px;\r\n    height: 8px;\r\n    border-radius: 50%;\r\n    background-color: #FA6348;\r\n    vertical-align: middle;\r\n    margin-right: 5px;\r\n}\r\n\r\n.lgOut_span a {\r\n    color: #99ccff;\r\n    margin-left: 15px;\r\n}\r\n\r\n.header-wrapper .header .f-l {\r\n    float: left;\r\n}\r\n\r\n.header-wrapper .header .f-r {\r\n    float: right;\r\n}\r\n\r\n.tail {\r\n    text-align: center;\r\n    height: 42px;\r\n    line-height: 42px;\r\n    color: #707E91;\r\n    background: transparent url(" + __webpack_require__(46) + ") repeat-x 0 0;\r\n}", ""]);
-
-	// exports
-
-
-/***/ },
-/* 46 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "369ae00ae0fbc525f1816ae80443c98a.png";
-
-/***/ },
-/* 47 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__.p + "8fe081cc183fbc533a591ae97d5f1a12.png";
 
 /***/ }
 /******/ ]);

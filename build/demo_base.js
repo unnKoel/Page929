@@ -87,25 +87,20 @@
 	             */
 	            build: function (_com) {
 	                try {
-	                    var comVessel = page.comVessel;  //组件容器
-	                    page._com_create(comVessel);  //创建默认组件
+	                    var comVessel = page.comVessel, //组件容器
+	                        mergeComItems = {};
+	                    page._com_create(comVessel, page.config.com);  //创建默认组件
 	                    comVessel.lgCallback = page.config.user.lgCallback;
 	                    comVessel.unLgCallback = page.config.user.unLgCallback;
 	                    comVessel.ajax_output = page._ajax_output;
-	                    if (_com) {
-	                        var comItems = _com;
-	                        for (var name in comItems) {
-	                            var comItem = comItems[name],
-	                                com = comItem.load(),
-	                                comObj = new com();
-	                            comVessel['' + name] = comObj;
-	                            comItems[name].obj = comObj;
-	                        }
-	                    }
-	                    var mergeComItems = $.extend({}, page.config.com, _com);
+	                    _com ? (
+	                        page._com_create(comVessel, _com),
+	                            mergeComItems = $.extend({}, page.config.com, _com)
+	                    ) : (
+	                        mergeComItems = page.config.com
+	                    );
 	                    page._com_interact(mergeComItems, comVessel); //组件交互
 	                } catch (e) {
-	                    console.log(e)
 	                }
 	                this.load();
 	            },
@@ -130,22 +125,22 @@
 	                                    comVessel = page.comVessel;
 	                                0 == result.code ?
 	                                    void(0 == result.code &&
-	                                    (   //登陆回调
-	                                        user = result.data,   //获取用户信息
-	                                            page.config.user.user_type ?
-	                                                (  //如果页面要求用户类型才可访问
-	                                                    page.config.user.user_type == user.userType ?
-	                                                        (
-	                                                            comVessel.lab_head_tail.mod_user_status(user.name, comVessel.lab_login),
-	                                                                page.config.user.lgCallback(user)
-	                                                        ) :
-	                                                        base.url.forward('/404.html') //页面身份不符合，跳404页
-	                                                ) :
-	                                                (
-	                                                    comVessel.lab_head_tail.mod_user_status(user.name, comVessel.lab_login),
-	                                                        page.config.user.lgCallback(user)
-	                                                )
-	                                    )
+	                                        (   //登陆回调
+	                                            user = result.data,   //获取用户信息
+	                                                page.config.user.user_type ?
+	                                                    (  //如果页面要求用户类型才可访问
+	                                                        page.config.user.user_type == user.userType ?
+	                                                            (
+	                                                                comVessel.lab_head_tail.mod_user_status(user.name, comVessel.lab_login),
+	                                                                    page.config.user.lgCallback(user)
+	                                                            ) :
+	                                                            base.url.forward('/404.html') //页面身份不符合，跳404页
+	                                                    ) :
+	                                                    (
+	                                                        comVessel.lab_head_tail.mod_user_status(user.name, comVessel.lab_login),
+	                                                            page.config.user.lgCallback(user)
+	                                                    )
+	                                        )
 	                                    ) :
 	                                    (
 	                                        page.config.user.unLgCallback ? page.config.user.unLgCallback() :   //未登陆回调
@@ -158,34 +153,71 @@
 	            /**
 	             * 创建页面组件
 	             * @param comVessel 组件容器
+	             * page.config.com
 	             */
-	            _com_create: function (comVessel) {
-	                var comItems = page.config.com;
+	            _com_create: function (comVessel, _comItems) {
+	                var comItems = _comItems;
 	                for (var name in comItems) {
-	                    var comItem = comItems[name],
-	                        com = comItem.load(),
-	                        comObj = new com();
-	                    comVessel['' + name] = comObj;
-	                    comItems[name].obj = comObj;
+	                    try {
+	                        var comItem = comItems[name],
+	                            loader = comItem.load;
+	                        if (loader) {
+	                            var com = loader(),
+	                                comObj = new com();
+	                            comVessel['' + name] = comObj;
+	                            comItems[name].obj = comObj;
+	                        } else {
+	                            comVessel['' + name] = null;
+	                        }
+	                    } catch (e) {
+	                    }
 	                }
 	            },
 
 	            /**
+	             *
+	             {
+	                lab_head_tail: {
+	                    load: function () {
+	                            return require('D:/project/Page929/example/demo_com/lab_head_tail_ac')
+	                        },
+	                        site: '.page',
+	                        interactCom: ['lab_login']
+	                    },
+
+	                    lab_login: {
+	                        load: function () {
+	                            return require('D:/project/Page929/example/demo_com/lab_goto_login')
+	                        },
+	                        site: '.page',
+	                        interactCom: []
+	                    }
+	            }
+	             *
 	             * 处理组件交互
 	             */
 	            _com_interact: function (mergeComItems, comVessel) {
 	                var comItems = mergeComItems;
 	                for (var i in comItems) {
-	                    var comItem = comItems[i],
-	                        comNames = comItem.interactCom,
-	                        interactComs = {};
-	                    comItem.obj.drew($(comItem.site));
-	                    for (var j = 0; j < comNames.length; j++) {
-	                        var comName = '' + comNames[j];
-	                        interactComs[comName] = comVessel[comName];
+	                    try {
+	                        var comItem = comItems[i],
+	                            comNames = comItem.interactCom,
+	                            site = comItem.site,
+	                            interactComs = {};
+	                        site ?   //是否配置了组件位置，没有则默认到以组件名命名的布局层中
+	                            comItem.obj.drew($(site))
+	                            :
+	                            (comItem.obj.drew($('#' + i)));
+	                        if (comNames) {   //配置了交互组件
+	                            for (var j = 0; j < comNames.length; j++) {
+	                                var comName = '' + comNames[j];
+	                                interactComs[comName] = comVessel[comName];
+	                            }
+	                            interactComs.ajax_output = page._ajax_output;
+	                            comItems[i].obj.setInteractComs(interactComs);
+	                        }
+	                    } catch (e) {
 	                    }
-	                    interactComs.ajax_output = page._ajax_output;
-	                    comItems[i].obj.setInteractComs(interactComs);
 	                }
 	            },
 
