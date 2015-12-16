@@ -155,9 +155,9 @@ define(function (require) {
                                 var comName = '' + comNames[j];
                                 interactComs[comName] = comVessel[comName];
                             }
-                            interactComs.ajax_output = page._ajax_output;
-                            comItems[i].obj.setInteractComs(interactComs);
                         }
+                        interactComs.ajax_output = page._ajax_output;
+                        comItems[i].obj.setInteractComs(interactComs);
                     } catch (e) {
                     }
                 }
